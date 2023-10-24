@@ -6,6 +6,7 @@ import ccnyimg from "../assets/ccnyhead.png"
 const Login = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [error, setError ] = useState("")
   const { logIn } = useUserAuth()
   const navigate = useNavigate()
 
@@ -16,9 +17,11 @@ const Login = () => {
         await logIn(email, password);
         navigate("/")
       } catch (err) {
+        setError(err.message)
         console.log(err)
       }
     } else {
+      setError("Use A @Citymail.cuny.edu")
       console.log("Email must include @citymail.cuny.edu");
     }
   }
@@ -30,6 +33,7 @@ const Login = () => {
         <img class="w-20 mx-auto mb-5" src={ccnyimg} />
         <form onSubmit={handleSubmit}>
           <div>
+            <div className="">{error}</div>
             <label class="block mb-2 text-indigo-500" for="username">Username</label>
             <input type="email"
                    placeholder="City College Email"
