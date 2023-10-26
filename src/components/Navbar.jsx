@@ -38,14 +38,14 @@ const Navbar = () => {
           <ul className="flex flex-col font-medium mt-4 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-transparent">
             {user ? (
               <>
-                <li><Link to="/home"><a className="block py-2 pl-3 pr-4 text-gray-900 rounded hover-bg-gray-100 md:hover-bg-transparent md:border-0 md:hover-text-blue-700 md:p-0">Map</a></Link></li>
-                <li><Link to="/"><a className="block py-2 pl-3 pr-4 text-gray-900 rounded hover-bg-gray-100 md:hover-bg-transparent md:border-0 md:hover-text-blue-700 md:p-0">Contact</a></Link></li>
-                <li><a className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover-bg-transparent md:border-0 md:hover-text-blue-700 md:p-0"><button onClick={handleLogOut}>LogOut</button></a></li>
+                <li><Link to="/home"><a className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-200 md:hover-bg-transparent md:border-0 md:hover-text-blue-700 md:p-0">Map</a></Link></li>
+                <li><Link to="/"><a className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-200 md:hover-bg-transparent md:border-0 md:hover-text-blue-700 md:p-0">Contact</a></Link></li>
+                <li><a className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-200 md:hover-bg-transparent md:border-0 md:hover-text-blue-700 md:p-0"><button onClick={handleLogOut}>LogOut</button></a></li>
               </>
             ) : (
               <>
-                <li><Link to="/login"><a className="block py-2 pl-3 pr-4 text-gray-900 rounded hover-bg-gray-100 md:hover-bg-transparent md:border-0 md:hover-text-blue-700 md:p-0">Login</a></Link></li>
-                <li><Link to="/signup"><a className="block py-2 pl-3 pr-4 text-gray-900 rounded hover-bg-gray-100 md:hover-bg-transparent md:border-0 md:hover-text-blue-700 md:p-0">Sign Up</a></Link></li>
+                <li><Link to="/login"><a className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-200 md:hover-bg-transparent md:border-0 md:hover-text-blue-700 md:p-0">Login</a></Link></li>
+                <li><Link to="/signup"><a className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-200 md:hover-bg-transparent md:border-0 md:hover-text-blue-700 md:p-0">Sign Up</a></Link></li>
               </>
             )}
           </ul>
