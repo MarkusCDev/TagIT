@@ -11,6 +11,7 @@ import Navbar from "./components/Navbar"
 /* Pages */
 import Landing from "./pages/Landing"
 import Home from "./pages/Home"
+import Contact from "./pages/Contact"
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/login" element={ <Login /> } />
         <Route path="/signup" element={ <Signup /> } />
         <Route path="/" element={ <Landing /> } />
+        <Route path="/contact" element={ <Contact /> } />
         <Route path="/home" element={<ProtectedRoute> <Home /> </ProtectedRoute>} />
       </Routes>
     </UserAuthContextProvider>

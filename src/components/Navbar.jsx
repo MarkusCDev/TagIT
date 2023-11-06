@@ -39,7 +39,7 @@ const Navbar = () => {
             {user ? (
               <>
                 <li><Link to="/home"><a className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-200 md:hover-bg-transparent md:border-0 md:hover-text-blue-700 md:p-0">Map</a></Link></li>
-                <li><Link to="/"><a className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-200 md:hover-bg-transparent md:border-0 md:hover-text-blue-700 md:p-0">Contact</a></Link></li>
+                <li><Link to="/contact"><a className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-200 md:hover-bg-transparent md:border-0 md:hover-text-blue-700 md:p-0">Contact</a></Link></li>
                 <li><a className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-200 md:hover-bg-transparent md:border-0 md:hover-text-blue-700 md:p-0"><button onClick={handleLogOut}>LogOut</button></a></li>
               </>
             ) : (
