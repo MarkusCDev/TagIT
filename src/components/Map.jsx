@@ -1,7 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { GoogleMap, InfoWindow, Marker, useJsApiLoader } from "@react-google-maps/api";
+import {
+  GoogleMap,
+  InfoWindow,
+  Marker,
+  useJsApiLoader, 
+  Polyline
+} from "@react-google-maps/api";
+import buss from '../assets/buss.png'
 import { getDocs, collection, query, orderBy, limit, onSnapshot} from "firebase/firestore";
 import { db } from "../firebase";
+import polyline from "@mapbox/polyline";
 
 const MapComponent = () => {
   const { isLoaded, loadError } = useJsApiLoader({
@@ -104,6 +112,14 @@ const MapComponent = () => {
     }
   };
 
+  const encodedPolyline = "iqcxFbjjbMfEtC`@`@rA~CV\\lFlD`@PtL~@~CBpDJ~AbAJNlEpCZ_@pBgBr@sBYIg@[iAs@qBjGgC{AUBeBeAyDGqCEwL_Am@[_FcDa@k@iAqCu@q@sDeCaIgFiLwH}ByAqCmBvBwGz@`@lNdFcDbKjJjGpCfB";
+
+  const decodedPath = polyline.decode(encodedPolyline);
+  const formattedPath = decodedPath.map((point) => ({
+    lat: point[0],
+    lng: point[1],
+  }));
+
   return (
     isLoaded && (
       <GoogleMap
@@ -157,6 +173,14 @@ const MapComponent = () => {
         }}
         onDragEnd={(e) => onMapDragEnd(e)}
       >
+        <Polyline
+                path={formattedPath}
+                options={{
+                    strokeColor: "#8c7dc4",  // Color of the polyline. #5688f8 for blue line
+                    strokeOpacity: 1,       // Opacity of the polyline.
+                    strokeWeight: 2,        // Thickness of the polyline.
+                }}
+            />
         {Object.values(markers).map((marker, index) => (
           <Marker
             key={index}
