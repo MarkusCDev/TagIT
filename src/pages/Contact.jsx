@@ -7,21 +7,21 @@ const Contact = () => {
     <div className="mb-4">
       <h1 className="text-center text-2xl text-indigo-700 font-bold">Contact Us</h1>
     </div>
-    {/* Example Team Member */}
+    {/* Contact Info */}
     <div className="mb-6">
-      <h2 className="text-xl text-indigo-700">John Doe</h2>
-      <p className="text-indigo-700">Position: Team Leader</p>
-      <p className="text-indigo-700">Phone: (123) 456-7890</p>
-      <p className="text-indigo-700">Email: johndoe@example.com</p>
+      <h2 className="text-xl text-black">Facility Department</h2>
+      <p className="text-indigo-700">Phone: (212) 650-8675</p>
+      <p className="text-indigo-700">Email: facilities@ccny.cuny.edu</p>
     </div>
-    {/* Another Team Member */}
+    {/* Team Members */}
     <div className="mb-6">
-      <h2 className="text-xl text-indigo-700">Jane Smith</h2>
-      <p className="text-indigo-700">Position: Developer</p>
-      <p className="text-indigo-700">Phone: (098) 765-4321</p>
-      <p className="text-indigo-700">Email: janesmith@example.com</p>
+      <h2 className="text-xl text-black">Team</h2>
+      <p className="text-indigo-700">Mengwai Chan</p>
+      <p className="text-indigo-700">Markus Chmiel</p>
+      <p className="text-indigo-700">Myat Thu Ko</p>
+      <p className="text-indigo-700">Kevin Perchersky</p>
+
     </div>
-    {/* Add more team members as needed */}
   </div>
 </div>
 

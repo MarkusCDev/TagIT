@@ -22,7 +22,7 @@ const Navbar = () => {
     <nav className="border-gray-200 bg-gray-50">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <a href="/" className="flex items-center">
-        <img src={logo} class="h-10 mr-3" />
+        <img src={logo} className="h-10 mr-3" />
           <span className="self-center text-2xl font-semibold whitespace-nowrap">Shuttle</span>
         </a>
         <button

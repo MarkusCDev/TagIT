@@ -1,7 +1,7 @@
 import React from 'react'
 import { useUserAuth } from '../components/UserAuth';
 import { Link } from 'react-router-dom'
-import logo from '../assets/ccnyhead.png'
+import logo from '../assets/frame.png'
 
 const Landing = () => {
   
@@ -11,9 +11,9 @@ const Landing = () => {
           {/* Logo Section */}
           <div className="mb-8">
             <img
-              src={logo} // Replace with the path to your logo
+              src={logo}
               alt="CCNY Shuttle Bus Tracker Logo"
-              className="mx-auto h-40" // Adjust height as needed
+              className="mx-auto h-40" 
             />
           </div>
   
@@ -25,7 +25,7 @@ const Landing = () => {
           <div className="mb-6">
             <h2 className="text-xl text-indigo-700 font-bold mb-4">About the Project</h2>
             <p className="text-indigo-700">
-              The CCNY Shuttle Bus Tracker is a real-time tracking service designed to make campus
+              The CCNY Shuttle Bus Tracker is a tracking project designed to make campus
               transportation easier and more accessible for CCNY students. Our platform provides
               up-to-date information on shuttle bus locations, routes, and estimated arrival times,
               helping you to plan your journey effectively and arrive on time, every time.

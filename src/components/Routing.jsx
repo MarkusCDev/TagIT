@@ -19,17 +19,17 @@ const Routing = () => {
   };
 
   return (
-    <div class="flex-col bg-white rounded-lg shadow-lg p-4">
-      <h1 class="flex justify-center text-2xl font-bold mb-5">Bus Stop Timings</h1>
+    <div className="flex-col bg-white rounded-lg shadow-lg p-4">
+      <h1 className="flex justify-center text-2xl font-bold mb-5">Bus Stop Timings</h1>
       <ul>
         {stops.map((stop, index) => (
           <li
             key={index}
-            class="flex justify-between items-center border-b py-2 last:border-0"
+            className="flex justify-between items-center border-b py-2 last:border-0"
           >
-            <span class="text-lg">{stop.name}</span>
-            <span class={`font-semibold ${getColorForTime(stop.time)}`}>
-              {stop.time}m
+            <span className="text-lg">{stop.name}</span>
+            <span className={`font-semibold ${getColorForTime(stop.time)}`}>
+              {stop.time}
             </span>
           </li>
         ))}

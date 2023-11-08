@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   GoogleMap,
   InfoWindow,
   Marker,
   useJsApiLoader,
 } from "@react-google-maps/api";
+import buss from '../assets/buss.png'
+import { getDocs, collection, query, orderBy, limit, onSnapshot} from "firebase/firestore";
+import { db } from "../firebase";
 
 const MapComponent = () => {
   const { isLoaded, loadError } = useJsApiLoader({
@@ -15,15 +18,93 @@ const MapComponent = () => {
     {
       position: {
         lat: 40.81842005961102,
-        lng: -73.95074082475607,
+        lng: -73.95074082475605,
       },
       label: { color: "black", text: "Campus" },
       draggable: true,
     },
   ];
 
+  const shuttleIcon = {
+    url: 'https://img.icons8.com/?size=77&id=46817&format=png', // The URL of the marker image
+    scaledSize: { width: 33, height: 33 },
+    anchor: { x: 15, y: 15 },
+  };
+  const campusIcon = {
+    url: 'https://img.icons8.com/?size=77&id=4BZkx8s5bPF5&format=png',
+    scaledSize: { width: 33, height: 33 }
+  }
+
+
   const [activeInfoWindow, setActiveInfoWindow] = useState(null);
-  const [markers, setMarkers] = useState(initialMarkers);
+  const [markers, setMarkers] = useState({
+    campus: {
+      position: {
+        lat: 40.81842005961102,
+        lng: -73.95074082475605,
+      },
+      icon: campusIcon,
+      //label: { color: "black", text: "Campus" },
+      draggable: true,
+    }
+  });
+
+  const retData = async () => {
+    const q = query(collection(db, "CCNY_Shuttle_1"), orderBy("datetime", "desc"), limit(1))
+    const querySnapshot = await getDocs(q);
+   querySnapshot.forEach((doc) => {
+   console.log(doc.id, " => ", doc.data(), " lat: ", doc.data().locationlatitude, " long: ", doc.data().locationlongitude);
+   });
+
+  }
+
+  useEffect(() => {
+    const q1 = query(collection(db, "CCNY_Shuttle_1"), orderBy("datetime", "desc"), limit(1));
+
+    const unsubscribe1 = onSnapshot(q1, (querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        setMarkers(prevMarkers => ({
+          ...prevMarkers,
+          shuttle1: {
+            position: {
+              lat: doc.data().locationlatitude,
+              lng: doc.data().locationlongitude,
+            },
+            icon: shuttleIcon,
+            label: { color: "black", text: "1" },
+            draggable: true,
+          }
+        }));
+      });
+    });
+
+    return () => unsubscribe1();
+  }, []);
+
+  useEffect(() => {
+    const q2 = query(collection(db, "CCNY_Shuttle_2"), orderBy("datetime", "desc"), limit(1));
+
+    const unsubscribe2 = onSnapshot(q2, (querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        setMarkers(prevMarkers => ({
+          ...prevMarkers,
+          shuttle2: {
+            position: {
+              lat: doc.data().locationlatitude,
+              lng: doc.data().locationlongitude,
+            },
+            icon: shuttleIcon,
+            label: { color: "black", text: "2" },
+            draggable: true,
+          }
+        }));
+      });
+    });
+
+    return () => unsubscribe2();
+  }, []);
+  
+  
 
   const containerStyle = {
     width: "520px",
@@ -37,6 +118,18 @@ const MapComponent = () => {
 
   const mapClicked = (event) => {
     console.log(event.latLng.lat(), event.latLng.lng());
+
+    // const newMarker = {
+    //   position: {
+    //     lat: event.latLng.lat(),
+    //     lng: event.latLng.lng(),
+    //   },
+    //   label: { color: "black", text: "New Location" }, // Update the label text as needed
+    //   draggable: true, // Set draggable to true or false as needed
+    // };
+
+    // setMarkers([newMarker]);
+
   };
 
   const markerClicked = (marker, index) => {
@@ -122,10 +215,11 @@ const MapComponent = () => {
         }}
         onDragEnd={(e) => onMapDragEnd(e)}
       >
-        {markers.map((marker, index) => (
+        {Object.values(markers).map((marker, index) => (
           <Marker
             key={index}
             position={marker.position}
+            icon={marker.icon}
             label={marker.label}
             draggable={marker.draggable}
             onDragEnd={(event) => markerDragEnd(event, index)}
