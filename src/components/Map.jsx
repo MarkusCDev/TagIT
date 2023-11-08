@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  GoogleMap,
-  InfoWindow,
-  Marker,
-  useJsApiLoader,
-} from "@react-google-maps/api";
-import buss from '../assets/buss.png'
+import { GoogleMap, InfoWindow, Marker, useJsApiLoader } from "@react-google-maps/api";
 import { getDocs, collection, query, orderBy, limit, onSnapshot} from "firebase/firestore";
 import { db } from "../firebase";
 
@@ -14,55 +8,23 @@ const MapComponent = () => {
     googleMapsApiKey: import.meta.env.VITE_APP_GOOGLE_API_KEY,
   });
 
-  const initialMarkers = [
-    {
-      position: {
-        lat: 40.81842005961102,
-        lng: -73.95074082475605,
-      },
-      label: { color: "black", text: "Campus" },
-      draggable: true,
-    },
-  ];
-
+  const [activeInfoWindow, setActiveInfoWindow] = useState(null);
+  const [markers, setMarkers] = useState({});
+  const center = { lat: 40.81807363038023, lng: -73.95091248613302};
+  const containerStyle = { width: "100%", height: "550px"};
   const shuttleIcon = {
-    url: 'https://img.icons8.com/?size=77&id=46817&format=png', // The URL of the marker image
+    url: 'https://img.icons8.com/?size=77&id=46817&format=png', 
     scaledSize: { width: 33, height: 33 },
     anchor: { x: 15, y: 15 },
   };
-  const campusIcon = {
-    url: 'https://img.icons8.com/?size=77&id=4BZkx8s5bPF5&format=png',
-    scaledSize: { width: 33, height: 33 }
-  }
 
-
-  const [activeInfoWindow, setActiveInfoWindow] = useState(null);
-  const [markers, setMarkers] = useState({
-    campus: {
-      position: {
-        lat: 40.81842005961102,
-        lng: -73.95074082475605,
-      },
-      icon: campusIcon,
-      //label: { color: "black", text: "Campus" },
-      draggable: true,
-    }
-  });
-
-  const retData = async () => {
-    const q = query(collection(db, "CCNY_Shuttle_1"), orderBy("datetime", "desc"), limit(1))
-    const querySnapshot = await getDocs(q);
-   querySnapshot.forEach((doc) => {
-   console.log(doc.id, " => ", doc.data(), " lat: ", doc.data().locationlatitude, " long: ", doc.data().locationlongitude);
-   });
-
-  }
-
+  // gets the shuttle one data
   useEffect(() => {
     const q1 = query(collection(db, "CCNY_Shuttle_1"), orderBy("datetime", "desc"), limit(1));
 
     const unsubscribe1 = onSnapshot(q1, (querySnapshot) => {
       querySnapshot.forEach((doc) => {
+        console.log("datetime: ", doc.data().datetime, " lat: ", doc.data().locationlatitude, " long: ", doc.data().locationlongitude)
         setMarkers(prevMarkers => ({
           ...prevMarkers,
           shuttle1: {
@@ -72,7 +34,7 @@ const MapComponent = () => {
             },
             icon: shuttleIcon,
             label: { color: "black", text: "1" },
-            draggable: true,
+            draggable: false,
           }
         }));
       });
@@ -81,11 +43,14 @@ const MapComponent = () => {
     return () => unsubscribe1();
   }, []);
 
+
+  // get the shuttle two data
   useEffect(() => {
     const q2 = query(collection(db, "CCNY_Shuttle_2"), orderBy("datetime", "desc"), limit(1));
 
     const unsubscribe2 = onSnapshot(q2, (querySnapshot) => {
       querySnapshot.forEach((doc) => {
+        console.log("datetime: ", doc.data().datetime, " lat: ", doc.data().locationlatitude, " long: ", doc.data().locationlongitude)
         setMarkers(prevMarkers => ({
           ...prevMarkers,
           shuttle2: {
@@ -95,7 +60,7 @@ const MapComponent = () => {
             },
             icon: shuttleIcon,
             label: { color: "black", text: "2" },
-            draggable: true,
+            draggable: false,
           }
         }));
       });
@@ -103,33 +68,9 @@ const MapComponent = () => {
 
     return () => unsubscribe2();
   }, []);
-  
-  
-
-  const containerStyle = {
-    width: "520px",
-    height: "520px",
-  };
-
-  const center = {
-    lat: 40.81842005961102,
-    lng: -73.95074082475607,
-  };
 
   const mapClicked = (event) => {
     console.log(event.latLng.lat(), event.latLng.lng());
-
-    // const newMarker = {
-    //   position: {
-    //     lat: event.latLng.lat(),
-    //     lng: event.latLng.lng(),
-    //   },
-    //   label: { color: "black", text: "New Location" }, // Update the label text as needed
-    //   draggable: true, // Set draggable to true or false as needed
-    // };
-
-    // setMarkers([newMarker]);
-
   };
 
   const markerClicked = (marker, index) => {
@@ -178,6 +119,7 @@ const MapComponent = () => {
           zoomControl: false,
           rotateControl: false,
           fullscreenControl: false,
+          disableDefaultUI: true,
           gestureHandling: "none",
           scrollwheel: false,
           styles: [
@@ -239,6 +181,7 @@ const MapComponent = () => {
         ))}
       </GoogleMap>
     )
+
   );
 };
 

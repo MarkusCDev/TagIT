@@ -1,22 +1,29 @@
 import React, {useState} from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useUserAuth } from './UserAuth'
-import logo from "../assets/ccnyhead.png"
+import logo from "../assets/bus.png"
 import menu from "../assets/menu.png"
 
 
 const Navbar = () => {
 
-  const { user, logOut } = useUserAuth();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { user, logOut } = useUserAuth()
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const navigate = useNavigate()
 
   const handleLogOut = async () => {
     try {
-      await logOut();
-      console.log("you are logged out");
+      await logOut()
+      console.log("you are logged out")
+      setIsMenuOpen(false)
+      navigate("/")
     } catch (e) {
-      console.log("suss not working");
+      console.log("suss not working")
     }}
+
+    const closeMenu = () => {
+      setIsMenuOpen(false)
+    };
 
   return (
     <nav className="border-gray-200 bg-gray-50">
@@ -38,14 +45,15 @@ const Navbar = () => {
           <ul className="flex flex-col font-medium mt-4 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-transparent">
             {user ? (
               <>
-                <li><Link to="/home"><a className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-200 md:hover-bg-transparent md:border-0 md:hover-text-blue-700 md:p-0">Map</a></Link></li>
-                <li><Link to="/contact"><a className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-200 md:hover-bg-transparent md:border-0 md:hover-text-blue-700 md:p-0">Contact</a></Link></li>
+                <li><Link to="/home" onClick={closeMenu}><a className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-200 md:hover-bg-transparent md:border-0 md:hover-text-blue-700 md:p-0">Map</a></Link></li>
+                <li><Link to="/contact" onClick={closeMenu}><a className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-200 md:hover-bg-transparent md:border-0 md:hover-text-blue-700 md:p-0">Contact</a></Link></li>
                 <li><a className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-200 md:hover-bg-transparent md:border-0 md:hover-text-blue-700 md:p-0"><button onClick={handleLogOut}>LogOut</button></a></li>
               </>
             ) : (
               <>
-                <li><Link to="/login"><a className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-200 md:hover-bg-transparent md:border-0 md:hover-text-blue-700 md:p-0">Login</a></Link></li>
-                <li><Link to="/signup"><a className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-200 md:hover-bg-transparent md:border-0 md:hover-text-blue-700 md:p-0">Sign Up</a></Link></li>
+                <li><Link to="/contact" onClick={closeMenu}><a className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-200 md:hover-bg-transparent md:border-0 md:hover-text-blue-700 md:p-0">Contact</a></Link></li>
+                <li><Link to="/login" onClick={closeMenu}><a className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-200 md:hover-bg-transparent md:border-0 md:hover-text-blue-700 md:p-0">Login</a></Link></li>
+                <li><Link to="/signup" onClick={closeMenu}><a className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-200 md:hover-bg-transparent md:border-0 md:hover-text-blue-700 md:p-0">Sign Up</a></Link></li>
               </>
             )}
           </ul>
