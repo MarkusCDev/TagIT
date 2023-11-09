@@ -17,14 +17,14 @@ function App() {
   return (
     
     <UserAuthContextProvider>
-    <Navbar />
-      <Routes>
-        <Route path="/login" element={ <Login /> } />
-        <Route path="/signup" element={ <Signup /> } />
-        <Route path="/" element={ <Landing /> } />
-        <Route path="/contact" element={ <Contact /> } />
-        <Route path="/home" element={<ProtectedRoute> <Home /> </ProtectedRoute>} />
-      </Routes>
+      <Navbar />
+        <Routes>
+          <Route path="/login" element={ <Login /> } />
+          <Route path="/signup" element={ <Signup /> } />
+          <Route path="/" element={ <Landing /> } />
+          <Route path="/contact" element={ <Contact /> } />
+          <Route path="/home" element={<ProtectedRoute> <Home /> </ProtectedRoute>} />
+        </Routes>
     </UserAuthContextProvider>
   )
 }

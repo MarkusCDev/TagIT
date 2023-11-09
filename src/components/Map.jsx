@@ -18,7 +18,7 @@ const MapComponent = () => {
 
   const [activeInfoWindow, setActiveInfoWindow] = useState(null);
   const [markers, setMarkers] = useState({});
-  const center = { lat: 40.81807363038023, lng: -73.95091248613302};
+  const center = { lat: 40.81792206720871, lng: -73.94995404366331};
   const containerStyle = { width: "100%", height: "550px"};
   const shuttleIcon = {
     url: 'https://img.icons8.com/?size=77&id=46817&format=png', 
@@ -32,7 +32,7 @@ const MapComponent = () => {
 
     const unsubscribe1 = onSnapshot(q1, (querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        console.log("datetime: ", doc.data().datetime, " lat: ", doc.data().locationlatitude, " long: ", doc.data().locationlongitude)
+        console.log("1 datetime: ", doc.data().datetime, " lat: ", doc.data().locationlatitude, " long: ", doc.data().locationlongitude)
         setMarkers(prevMarkers => ({
           ...prevMarkers,
           shuttle1: {
@@ -58,7 +58,7 @@ const MapComponent = () => {
 
     const unsubscribe2 = onSnapshot(q2, (querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        console.log("datetime: ", doc.data().datetime, " lat: ", doc.data().locationlatitude, " long: ", doc.data().locationlongitude)
+        console.log("2 datetime: ", doc.data().datetime, " lat: ", doc.data().locationlatitude, " long: ", doc.data().locationlongitude)
         setMarkers(prevMarkers => ({
           ...prevMarkers,
           shuttle2: {
@@ -76,6 +76,31 @@ const MapComponent = () => {
 
     return () => unsubscribe2();
   }, []);
+
+  useEffect(() => {
+    const q3 = query(collection(db, "CCNY_Shuttle_3"), orderBy("datetime", "desc"), limit(1));
+  
+    const unsubscribe3 = onSnapshot(q3, (querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        console.log("3 datetime: ", doc.data().datetime, " lat: ", doc.data().locationlatitude, " long: ", doc.data().locationlongitude)
+        setMarkers(prevMarkers => ({
+          ...prevMarkers,
+          shuttle3: {
+            position: {
+              lat: doc.data().locationlatitude,
+              lng: doc.data().locationlongitude,
+            },
+            icon: shuttleIcon,
+            label: { color: "black", text: "3" },
+            draggable: false,
+          }
+        }));
+      });
+    });
+  
+    return () => unsubscribe3();
+  }, []);
+  
 
   const mapClicked = (event) => {
     console.log(event.latLng.lat(), event.latLng.lng());
