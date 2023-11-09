@@ -145,6 +145,23 @@ const MapComponent = () => {
     lng: point[1],
   }));
 
+
+  // For animating polyline 
+  const [busOffset, setBusOffset] = useState('0%');
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setBusOffset((prevOffset) => {
+        const newOffset = (parseFloat(prevOffset) + 0.5) % 100;
+        return `${newOffset}%`;
+      });
+    }, 20);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
+
+
   return (
     isLoaded && (
       <GoogleMap
@@ -203,7 +220,17 @@ const MapComponent = () => {
                 options={{
                     strokeColor: "#8c7dc4",  // Color of the polyline. #5688f8 for blue line
                     strokeOpacity: 1,       // Opacity of the polyline.
-                    strokeWeight: 2,        // Thickness of the polyline.
+                    strokeWeight: 2,
+                    icons: [
+                      {
+                        icon: {
+                          path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
+                          scale: 4,
+                          strokeColor: '#393',
+                        },
+                        offset: busOffset,
+                      },
+                    ],        // Thickness of the polyline.
                 }}
             />
         {Object.values(markers).map((marker, index) => (

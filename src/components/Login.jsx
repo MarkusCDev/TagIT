@@ -27,7 +27,7 @@ const Login = () => {
   }
 
   return (
-    <div className="flex min-h-screen bg-violet-400 items-center justify-center px-4 mt-2 sm:px-6 lg:px-8">
+    <div className="flex min-h-screen bg-gradient-to-b from-violet-300 to-violet-500 items-center justify-center px-4 mt-2 sm:px-6 lg:px-8">
       <div className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl m-auto bg-white rounded-lg p-5">
         {/* Logo */}
         <img className="w-20 h-20 mx-auto mb-5" src={ccnyimg} alt="CCNY Logo" />
