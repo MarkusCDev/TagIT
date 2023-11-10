@@ -137,18 +137,21 @@ const MapComponent = () => {
     }
   };
 
-  const encodedPolyline = "iqcxFbjjbMfEtC`@`@rA~CV\\lFlD`@PtL~@~CBpDJ~AbAJNlEpCZ_@pBgBr@sBYIg@[iAs@qBjGgC{AUBeBeAyDGqCEwL_Am@[_FcDa@k@iAqCu@q@sDeCaIgFiLwH}ByAqCmBvBwGz@`@lNdFcDbKjJjGpCfB";
 
-  const decodedPath = polyline.decode(encodedPolyline);
-  const formattedPath = decodedPath.map((point) => ({
-    lat: point[0],
-    lng: point[1],
-  }));
+  function decodeAndFormatPolyline(encodedPolyline) {
+    const decodedPath = polyline.decode(encodedPolyline);
+    return decodedPath.map(point => ({ lat: point[0], lng: point[1] }));
+  }
 
+  //polyline for entire route
+  const formattedPath = decodeAndFormatPolyline("iqcxFbjjbMfEtC`@`@rA~CV\\lFlD`@PtL~@~CBpDJ~AbAJNlEpCZ_@pBgBr@sBYIg@[iAs@qBjGgC{AUBeBeAyDGqCEwL_Am@[_FcDa@k@iAqCu@q@sDeCaIgFiLwH}ByAqCmBvBwGz@`@lNdFcDbKjJjGpCfB")
+
+  //polyline for bus temp route
+  const formattedPath2 = decodeAndFormatPolyline("mxaxFd|jbM}@k@yAtEYx@eC_BUBeBeAyDGqCEwL_Am@[_FcDa@k@iAqCu@q@sDeC")
 
   // For animating polyline 
   const [busOffset, setBusOffset] = useState('0%');
-
+  
   useEffect(() => {
     const intervalId = setInterval(() => {
       setBusOffset((prevOffset) => {
@@ -215,8 +218,28 @@ const MapComponent = () => {
         }}
         onDragEnd={(e) => onMapDragEnd(e)}
       >
+       {/* Polyline for Bus Route */}
         <Polyline
                 path={formattedPath}
+                options={{
+                    strokeColor: "#8c7dc4",  // Color of the polyline. #5688f8 for blue line
+                    strokeOpacity: 1,       // Opacity of the polyline.
+                    strokeWeight: 2,
+                    // icons: [
+                    //   {
+                    //     icon: {
+                    //       path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
+                    //       scale: 1,
+                    //       strokeColor: '#393',
+                    //     },
+                    //     offset: busOffset,
+                    //   },
+                    // ],        
+                }}
+            />
+        {/* Polyline for Bus 1 Routing */}
+        <Polyline
+                path={formattedPath2}
                 options={{
                     strokeColor: "#8c7dc4",  // Color of the polyline. #5688f8 for blue line
                     strokeOpacity: 1,       // Opacity of the polyline.
@@ -225,7 +248,7 @@ const MapComponent = () => {
                       {
                         icon: {
                           path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
-                          scale: 4,
+                          scale: 1,
                           strokeColor: '#393',
                         },
                         offset: busOffset,

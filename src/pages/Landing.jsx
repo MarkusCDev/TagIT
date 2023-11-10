@@ -1,11 +1,15 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import logo from '../assets/logocircle.png'
+import { useUserAuth } from '../components/UserAuth'
 
 const Landing = () => {
+
+  const { user } = useUserAuth()
+
   return (
     // Use mobile-first approach: start with your smallest styles and then scale up
-    <div className="flex flex-col min-h-screen bg-violet-400 justify-center items-center px-4 sm:px-6 lg:px-8 mt-2 sm:mt-0">
+    <div className="flex flex-col min-h-screen bg-gradient-to-b from-violet-300 to-violet-500 justify-center items-center px-4 sm:px-6 lg:px-8 mt-2 sm:mt-0">
       {/* Scale the max-width up on larger screens */}
       <div className="w-full max-w-lg sm:max-w-xl lg:max-w-2xl bg-white rounded-lg shadow-md p-6 sm:p-8 text-center">
         
@@ -46,6 +50,7 @@ const Landing = () => {
         </div>
 
         {/* Call to Action */}
+        { user? (
         <Link to="/home">
           <button
             className="bg-indigo-700 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300"
@@ -54,6 +59,16 @@ const Landing = () => {
             Start Tracking
           </button>
         </Link>
+        ) : (
+          <Link to="/login">
+          <button
+            className="bg-indigo-700 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300"
+            type="button"
+          >
+            Start Tracking
+          </button>
+        </Link>
+        )}
       </div>
     </div>
   );
