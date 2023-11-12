@@ -7,6 +7,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Navbar from "./components/Navbar";
+import CopyrightNotice from "./components/CopyrightNotice";
 
 /* Pages */
 import About from "./pages/AboutUs";
@@ -35,6 +36,7 @@ function App() {
 
         <Route path="*" element={<NotFound />} />
       </Routes>
+      <CopyrightNotice />
     </UserAuthContextProvider>
   );
 }

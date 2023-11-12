@@ -31,7 +31,7 @@ const AboutUs = () => {
         {/* Project Details */}
         <div className="mb-6 text-left">
           <h2 className="text-lg sm:text-xl text-indigo-700 font-bold mb-4">
-            AboutUs the Project
+            About the Project
           </h2>
           <p className="text-indigo-700">
             The CCNY Shuttle Bus Tracker is a tracking project designed to make
@@ -52,7 +52,6 @@ const AboutUs = () => {
             <li>Detailed route maps</li>
             <li>Estimated arrival times at each stop</li>
             <li>User-friendly interface</li>
-            <li>Service updates and notifications</li>
           </ul>
         </div>
 
