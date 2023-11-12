@@ -1,35 +1,44 @@
-import React, { useState } from "react"
-import { Route, Routes } from 'react-router-dom'
+import React, { useState } from "react";
+import { Route, Routes } from "react-router-dom";
 
 /* Components */
-import { UserAuthContextProvider } from "./components/UserAuth"
-import ProtectedRoute from "./components/ProtectedRoute"
-import Login from "./components/Login"
-import Signup from "./components/Signup"
-import Navbar from "./components/Navbar"
+import { UserAuthContextProvider } from "./components/UserAuth";
+import ProtectedRoute from "./components/ProtectedRoute";
+import Login from "./components/Login";
+import Signup from "./components/Signup";
+import Navbar from "./components/Navbar";
+import CopyrightNotice from "./components/CopyrightNotice";
 
 /* Pages */
-import Landing from "./pages/Landing"
-import Home from "./pages/Home"
-import Contact from "./pages/Contact"
-import NotFound from "./pages/NotFound"
+import About from "./pages/AboutUs";
+import LandingMap from "./pages/LandingMap";
+import Contact from "./pages/Contact";
+import NotFound from "./pages/NotFound";
 
 function App() {
   return (
-    
     <UserAuthContextProvider>
       <Navbar />
-        <Routes>
-          <Route path="/login" element={ <Login /> } />
-          <Route path="/signup" element={ <Signup /> } />
-          <Route path="/" element={ <Landing /> } />
-          <Route path="/contact" element={ <Contact /> } />
-          <Route path="/home" element={<ProtectedRoute> <Home /> </ProtectedRoute>} />
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              {" "}
+              <LandingMap />{" "}
+            </ProtectedRoute>
+          }
+        />
 
-          <Route path="*" element={<NotFound/>} />
-        </Routes>
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+      <CopyrightNotice />
     </UserAuthContextProvider>
-  )
+  );
 }
 
-export default App
+export default App;
