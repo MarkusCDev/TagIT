@@ -27,12 +27,12 @@ const Navbar = () => {
   return (
     <nav className="border-gray-200 bg-gray-50">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <a href="/about" className="flex items-center">
+        <Link to="/about" className="flex items-center">
           <img src={logo} className="h-10 mr-3" />
           <span className="self-center text-2xl font-semibold whitespace-nowrap">
             Shuttle
           </span>
-        </a>
+        </Link>
         <button
           type="button"
           className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
