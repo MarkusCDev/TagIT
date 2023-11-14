@@ -57,7 +57,7 @@ const AboutUs = () => {
 
         {/* Call to Action */}
         {user ? (
-          <Link to="/">
+          <Link to="/map">
             <button
               className="bg-indigo-700 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300"
               type="button"
