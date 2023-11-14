@@ -52,7 +52,7 @@ const Navbar = () => {
               <>
                 <li>
                   <Link
-                    to="/"
+                    to="/map"
                     onClick={closeMenu}
                     className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-200 md:hover-bg-transparent md:border-0 md:hover-text-blue-700 md:p-0"
                   >

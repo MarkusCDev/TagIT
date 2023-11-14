@@ -15,7 +15,7 @@ const Login = () => {
     if (email.includes("@citymail.cuny.edu")) {
       try {
         await logIn(email, password);
-        navigate("/");
+        navigate("/map");
       } catch (err) {
         setError(err.message);
         console.log(err);
