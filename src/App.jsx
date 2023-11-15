@@ -26,6 +26,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/reset" element={<ResetPassword />} />
         <Route path="/about" element={<About />} />
+        <Route path="/" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/map" element={<ProtectedRoute><LandingMap /></ProtectedRoute>}/>
         <Route path="*" element={<NotFound />} />
