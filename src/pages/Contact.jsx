@@ -1,11 +1,8 @@
 import React from "react";
-import { useUserAuth } from "../components/UserAuth";
 import { Link } from "react-router-dom";
 import '../customStyles.css'
 
 const Contact = () => {
-  const { user } = useUserAuth();
-
   return (
     <div className="page-container">
       <div className="page-container-inner">

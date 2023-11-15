@@ -27,7 +27,7 @@ function App() {
         <Route path="/reset" element={<ResetPassword />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/" element={<ProtectedRoute> <LandingMap /> </ProtectedRoute>}/>
+        <Route path="/map" element={<ProtectedRoute><LandingMap /></ProtectedRoute>}/>
         <Route path="*" element={<NotFound />} />
       </Routes>
       <CopyrightNotice />
