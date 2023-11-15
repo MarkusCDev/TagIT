@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useUserAuth } from "./UserAuth";
 import { useNavigate, Link } from "react-router-dom";
 import ccnyimg from "../assets/ccnyhead.png";
+import '../customStyles.css'
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -27,8 +28,8 @@ const Login = () => {
   };
 
   return (
-    <div className="flex min-h-screen bg-gradient-to-b from-violet-300 to-violet-500 items-center justify-center px-4 mt-2 sm:px-6 lg:px-8">
-      <div className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl m-auto bg-white rounded-lg p-5">
+    <div className="page-container">
+      <div className="page-container-inner">
         {/* Logo */}
         <img className="w-20 h-20 mx-auto mb-5" src={ccnyimg} alt="CCNY Logo" />
         {/* Login Form */}
@@ -77,18 +78,18 @@ const Login = () => {
 
         {/* Additional Links */}
         <div className="flex justify-between">
-          <a
+          <Link
             className="text-indigo-700 hover:text-purple-700 text-sm"
-            href="/forgot-password"
+            to="/reset"
           >
             Forgot Password?
-          </a>
-          <a
+          </Link>
+          <Link
             className="text-indigo-700 hover:text-purple-700 text-sm"
-            href="/signup"
+            to="/signup"
           >
             New? Create an account
-          </a>
+          </Link>
         </div>
       </div>
     </div>

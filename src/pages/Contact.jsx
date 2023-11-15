@@ -1,13 +1,14 @@
 import React from "react";
 import { useUserAuth } from "../components/UserAuth";
 import { Link } from "react-router-dom";
+import '../customStyles.css'
 
 const Contact = () => {
   const { user } = useUserAuth();
 
   return (
-    <div className="flex min-h-screen bg-gradient-to-b from-violet-300 to-violet-500 items-center justify-center px-4 mt-2 sm:px-6 lg:px-8">
-      <div className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl m-auto bg-white rounded-lg p-5 shadow-lg">
+    <div className="page-container">
+      <div className="page-container-inner">
         <div className="mb-8">
           <h1 className="text-center text-2xl text-indigo-700 font-bold">
             Contact Us
@@ -48,16 +49,14 @@ const Contact = () => {
           <p className="text-indigo-700">Kevin Perchersky</p>
         </div>
         <div className="flex items-center justify-center">
-          {!user && (
             <Link to="/about">
               <button
-                className="bg-indigo-700 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300"
+                className="button-hover"
                 type="button"
               >
                 About Us
               </button>
             </Link>
-          )}
         </div>
       </div>
     </div>

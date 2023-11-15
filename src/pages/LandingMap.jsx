@@ -1,11 +1,12 @@
 import React, { useState, useEffecct } from "react";
 import MapComponent from "../components/Map";
 import Routing from "../components/Routing";
+import '../customStyles.css'
 
 const LandingMap = () => {
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-b from-violet-300 to-violet-500 justify-center items-center px-4 sm:px-6 lg:px-8">
-      <div className="mt-3 w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl bg-gradient-to-b from-violet-300 to-violet-500 rounded-lg p-4 shadow-md">
+    <div className="landing-map-container">
+      <div className="landing-map-container-inner">
         <div className="w-full mb-4">
           <Routing />
         </div>

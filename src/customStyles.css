@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.page-container {
+    @apply flex min-h-screen bg-gradient-to-b from-violet-300 to-violet-500 items-center justify-center px-4 mt-2 sm:px-6 lg:px-8;
+}
+
+.page-container-inner {
+    @apply w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl m-auto bg-white rounded-lg p-5;
+}
+
+.landing-map-container {
+    @apply flex flex-col min-h-screen bg-gradient-to-b from-violet-300 to-violet-500 justify-center items-center px-4 sm:px-6 lg:px-8;
+}
+
+.landing-map-container-inner {
+    @apply mt-3 w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl bg-gradient-to-b from-violet-300 to-violet-500 rounded-lg p-4 shadow-md
+}
+
+.button-hover {
+    @apply bg-indigo-700 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300;
+}
+
+.about-us-container {
+    @apply flex flex-col min-h-screen bg-gradient-to-b from-violet-300 to-violet-500 justify-center items-center px-4 sm:px-6 lg:px-8 mt-2 sm:mt-0;
+}
+
+.about-us-container-inner {
+    @apply w-full max-w-lg sm:max-w-xl lg:max-w-2xl bg-white rounded-lg shadow-md p-6 sm:p-8 text-center;
+}
+
+.button-hover {
+    @apply bg-indigo-700 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300;
+}

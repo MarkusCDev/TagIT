@@ -2,15 +2,16 @@ import React from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/logocircle.png";
 import { useUserAuth } from "../components/UserAuth";
+import '../customStyles.css'
 
 const AboutUs = () => {
   const { user } = useUserAuth();
 
   return (
     // Use mobile-first approach: start with your smallest styles and then scale up
-    <div className="flex flex-col min-h-screen bg-gradient-to-b from-violet-300 to-violet-500 justify-center items-center px-4 sm:px-6 lg:px-8 mt-2 sm:mt-0">
+    <div className="about-us-container">
       {/* Scale the max-width up on larger screens */}
-      <div className="w-full max-w-lg sm:max-w-xl lg:max-w-2xl bg-white rounded-lg shadow-md p-6 sm:p-8 text-center">
+      <div className="about-us-container-inner">
         {/* Logo Section */}
         <div className="mb-8">
           <img
