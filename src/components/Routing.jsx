@@ -14,6 +14,7 @@ const Routing = () => {
     return minutes;
   }
 
+  // NAC to 125
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -31,8 +32,10 @@ const Routing = () => {
     };
 
     fetchData();
-  }, []); // Empty dependency array to run only once on component mount
+  }, []); 
 
+
+  // NAC to 145
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -50,8 +53,10 @@ const Routing = () => {
     };
 
     fetchData();
-  }, []); // Empty dependency array to run only once on component mount
+  }, []); 
 
+
+  // 145 to NAC
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -69,8 +74,9 @@ const Routing = () => {
     };
 
     fetchData();
-  }, []); // Empty dependency array to run only once on component mount
+  }, [])
 
+  // 125 to NAC
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -88,7 +94,7 @@ const Routing = () => {
     };
 
     fetchData();
-  }, []); // Empty dependency array to run only once on component mount
+  }, []) 
 
 
   const stops = [
