@@ -20,6 +20,7 @@ const MapComponent = () => {
   const [markers, setMarkers] = useState({});
   const center = { lat: 40.81792206720871, lng: -73.94995404366331};
   const containerStyle = { width: "100%", height: "550px"};
+  const {direction, setDirection} = ({})
   const shuttleIcon = {
     url: 'https://img.icons8.com/?size=77&id=46817&format=png', 
     scaledSize: { width: 33, height: 33 },
