@@ -3,16 +3,28 @@ import { collection, query, orderBy, limit, onSnapshot, where, and } from "fireb
 import { db } from "../firebase";
 
 const Routing = () => {
-  const [to145th, setTo145th] = useState(0);
-  const [to145thtonac, setTo145thToNac] = useState(0);
-  const [to125th, setTo125th] = useState(0);
-  const [to125thtonac, setTo125thToNac] = useState(0);
+  const [to145th, setTo145th] = useState(30);
+  const [to145thtonac, setTo145thToNac] = useState(30);
+  const [to125th, setTo125th] = useState(30);
+  const [to125thtonac, setTo125thToNac] = useState(30);
 
   function secondsToCeilingMinutes(s) {
     var seconds = parseInt(s.slice(0, -1), 10);
     var minutes = Math.ceil(seconds / 60);
     return minutes;
   }
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTo145th((prevTime) => (prevTime > 0 ? prevTime - 1 : 30));
+      setTo125th((prevTime) => (prevTime > 0 ? prevTime - 1 : 30));
+      setTo145thToNac((prevTime) => (prevTime > 0 ? prevTime - 1 : 30));
+      setTo125thToNac((prevTime) => (prevTime > 0 ? prevTime - 1 : 30));
+    }, 60000); // Decrements every 60 seconds
+
+    // Cleanup
+    return () => clearInterval(timer);
+  }, []);
 
   // NAC to 125
   useEffect(() => {
@@ -63,8 +75,6 @@ const Routing = () => {
         const q1 = query(collection(db, "CCNY_Shuttle_Routing"), orderBy("datetime", "desc"), limit(1), and(where("prevStop", "==", "W145"), where("nextStop", "==", "NAC")));
         const unsubscribe1 = onSnapshot(q1, (querySnapshot) => {
           querySnapshot.forEach((doc) => {
-            console.log("3 datetime: ", doc.data().datetime, " previous stop: ", doc.data().prevStop, " nest stop: ", doc.data().nextStop, " prev to next stop time: ", doc.data().duration);
-            console.log(secondsToCeilingMinutes(doc.data().duration));
             setTo145thToNac(secondsToCeilingMinutes(doc.data().duration));
           });
         });
@@ -74,7 +84,7 @@ const Routing = () => {
     };
 
     fetchData();
-  }, [])
+  }, []);
 
   // 125 to NAC
   useEffect(() => {
@@ -83,8 +93,6 @@ const Routing = () => {
         const q1 = query(collection(db, "CCNY_Shuttle_Routing"), orderBy("datetime", "desc"), limit(1), and(where("prevStop", "==", "W125"), where("nextStop", "==", "NAC")));
         const unsubscribe1 = onSnapshot(q1, (querySnapshot) => {
           querySnapshot.forEach((doc) => {
-            console.log("4 datetime: ", doc.data().datetime, " previous stop: ", doc.data().prevStop, " nest stop: ", doc.data().nextStop, " prev to next stop time: ", doc.data().duration);
-            console.log(secondsToCeilingMinutes(doc.data().duration));
             setTo125thToNac(secondsToCeilingMinutes(doc.data().duration));
           });
         });
@@ -94,7 +102,7 @@ const Routing = () => {
     };
 
     fetchData();
-  }, []) 
+  }, []);
 
 
   const stops = [

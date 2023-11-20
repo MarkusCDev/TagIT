@@ -4,6 +4,7 @@ import {
   signInWithEmailAndPassword,
   onAuthStateChanged,
   signOut,
+  sendEmailVerification,
 } from "firebase/auth"
 import { auth } from "../firebase"
 
@@ -16,7 +17,9 @@ export function UserAuthContextProvider({ children }) {
     return signInWithEmailAndPassword(auth, email, password)
   }
   function signUp(email, password) {
-    return createUserWithEmailAndPassword(auth, email, password)
+    return createUserWithEmailAndPassword(auth, email, password).then((cred) => {
+      return sendEmailVerification(cred.user)
+    })
   }
   function logOut() {
     return signOut(auth);
