@@ -1,7 +1,9 @@
-import React, { useState, useEffecct } from "react";
-import MapComponent from "../components/Map";
-import Routing from "../components/Routing";
+import React, { useState, useEffecct } from "react"
+import MapComponent from "../components/Map"
+import Routing from "../components/Routing"
 import '../customStyles.css'
+
+{/* Bus Route Table + Map Page */}
 
 const LandingMap = () => {
   return (
@@ -18,4 +20,4 @@ const LandingMap = () => {
   );
 };
 
-export default LandingMap;
+export default LandingMap

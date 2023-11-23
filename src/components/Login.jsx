@@ -1,30 +1,33 @@
-import React, { useState } from "react";
-import { useUserAuth } from "./UserAuth";
-import { useNavigate, Link } from "react-router-dom";
-import ccnyimg from "../assets/ccnyhead.png";
+import React, { useState } from "react"
+import { useUserAuth } from "./UserAuth"
+import { useNavigate, Link } from "react-router-dom"
+import ccnyimg from "../assets/ccnyhead.png"
 import '../customStyles.css'
 
-const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const { logIn } = useUserAuth();
-  const navigate = useNavigate();
+{/* Login Page */} 
 
+const Login = () => {
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [error, setError] = useState("")
+  const [showPassword, setShowPassword] = useState(false)
+  const { logIn } = useUserAuth()
+  const navigate = useNavigate()
+
+  {/* Handles Firebase login */} 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
     if (email.includes("@citymail.cuny.edu")) {
       try {
-        await logIn(email, password);
+        await logIn(email, password)
         navigate("/map");
       } catch (err) {
         setError(err.message);
         console.log(err);
       }
     } else {
-      setError("Use A @Citymail.cuny.edu");
-      console.log("Email must include @citymail.cuny.edu");
+      setError("Use A @Citymail.cuny.edu")
+      console.log("Email must include @citymail.cuny.edu")
     }
   };
 
@@ -69,7 +72,7 @@ const Login = () => {
               />
               <button
                 type="button"
-                className="flex items-center absolute top-0 right-0 mt-3 mr-4 p-0.25 rounded bg-indigo-100"
+                className="flex items-center absolute top-0 right-0 mt-3 mr-4 p-0.25 rounded"
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? (

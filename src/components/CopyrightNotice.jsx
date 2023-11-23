@@ -1,4 +1,6 @@
-import React from "react";
+import React from "react"
+
+{/* Copyright Footer */}
 
 const CopyrightNotice = () => (
   <div className="max-w-screen-xl mx-auto p-4 text-center">
@@ -9,4 +11,4 @@ const CopyrightNotice = () => (
   </div>
 );
 
-export default CopyrightNotice;
+export default CopyrightNotice

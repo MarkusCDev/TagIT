@@ -1,6 +1,8 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react'
+import { Link } from 'react-router-dom'
 import '../customStyles.css'
+
+{/* 404 Not Found Routing Page */}
 
 const NotFound = () => {
   return (

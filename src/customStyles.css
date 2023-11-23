@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Common Styles for page layouts */
 
 .page-container {
     @apply flex min-h-screen bg-gradient-to-b from-violet-300 to-violet-500 items-center justify-center px-4 mt-2 sm:px-6 lg:px-8;

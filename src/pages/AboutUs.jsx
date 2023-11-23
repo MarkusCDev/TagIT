@@ -1,39 +1,30 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import logo from "../assets/logocircle.png";
-import { useUserAuth } from "../components/UserAuth";
+import React from "react"
+import { Link } from "react-router-dom"
+import { useUserAuth } from "../components/UserAuth"
+import logo from "../assets/logocircle.png"
 import '../customStyles.css'
+
+{/* About Us Page */}
 
 const AboutUs = () => {
   const { user } = useUserAuth();
 
   return (
-    // Use mobile-first approach: start with your smallest styles and then scale up
     <div className="about-us-container">
-      {/* Scale the max-width up on larger screens */}
       <div className="about-us-container-inner">
+
         {/* Logo Section */}
         <div className="mb-8">
-          <img
-            src={logo}
-            alt="CCNY Shuttle Bus Tracker Logo"
-            className="mx-auto h-20 sm:h-32 md:h-40" // Adjust the size of the logo for different screens
-          />
+          <img src={logo} alt="CCNY Shuttle Bus Tracker Logo" className="mx-auto h-20 sm:h-32 md:h-40" />
         </div>
 
         {/* Project Title */}
-        <h1 className="text-2xl sm:text-3xl text-indigo-700 font-bold mb-4">
-          CCNY Shuttle Bus Tracker
-        </h1>
-        <p className="text-indigo-700 font-semibold mb-6">
-          Keeping you on the move, on time.
-        </p>
+        <h1 className="text-2xl sm:text-3xl text-indigo-700 font-bold mb-4">CCNY Shuttle Bus Tracker</h1>
+        <p className="text-indigo-700 font-semibold mb-6">Keeping you on the move, on time.</p>
 
         {/* Project Details */}
         <div className="mb-6 text-left">
-          <h2 className="text-lg sm:text-xl text-indigo-700 font-bold mb-4">
-            About the Project
-          </h2>
+          <h2 className="text-lg sm:text-xl text-indigo-700 font-bold mb-4">About the Project</h2>
           <p className="text-indigo-700">
             The CCNY Shuttle Bus Tracker is a tracking project designed to make
             campus transportation easier and more accessible for CCNY students.
@@ -56,24 +47,16 @@ const AboutUs = () => {
           </ul>
         </div>
 
-        {/* Call to Action */}
+        {/* Call to Action Tracking Button*/}
         {user ? (
-          <Link to="/map">
-            <button
-              className="bg-indigo-700 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300"
-              type="button"
-            >
-              Start Tracking
-            </button>
+          <Link to="/map"> 
+           {/* If User Logged In = True */}
+            <button className="bg-indigo-700 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300"type="button"> Start Tracking</button>
           </Link>
         ) : (
           <Link to="/login">
-            <button
-              className="bg-indigo-700 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300"
-              type="button"
-            >
-              Start Tracking
-            </button>
+            {/* If User Logged In = False */}
+            <button className="bg-indigo-700 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300" type="button">Start Tracking</button>
           </Link>
         )}
       </div>

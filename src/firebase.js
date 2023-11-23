@@ -4,6 +4,8 @@ import { getFirestore } from "firebase/firestore"
 import { getStorage } from "firebase/storage"
 import { getAnalytics } from "firebase/analytics"
 
+{/* Firebase Database Configuration */}
+
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_APP_FIREBASE_API_KEY,
   authDomain: import.meta.env.VITE_APP_FIREBASE_AUTH_DOMAIN,

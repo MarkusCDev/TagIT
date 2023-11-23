@@ -1,42 +1,47 @@
-import React, { useState } from "react";
-import { useUserAuth } from "./UserAuth";
-import { useNavigate, Link } from "react-router-dom";
-import ccnyimg from "../assets/ccnyhead.png";
+import React, { useState } from "react"
+import { useUserAuth } from "./UserAuth"
+import { useNavigate, Link } from "react-router-dom"
+import ccnyimg from "../assets/ccnyhead.png"
 import '../customStyles.css'
 
-const Signup = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPwd, setconfirmPwd] = useState("");
-  const [passwordsMatch, setPasswordsMatch] = useState(true);
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const { signUp } = useUserAuth();
-  const navigate = useNavigate();
+{/* Signup Page */}
 
+const Signup = () => {
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [confirmPwd, setconfirmPwd] = useState("")
+  const [passwordsMatch, setPasswordsMatch] = useState(true)
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const { signUp } = useUserAuth()
+  const navigate = useNavigate()
+
+  {/* Handles signup user with firebase database, limited to 100 signups per hour*/}
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
     if (email.includes("@citymail.cuny.edu") && password === confirmPwd) {
       try {
-        await signUp(email, password);
-        navigate("/login");
+        await signUp(email, password)
+        navigate("/login")
       } catch (err) {
-        console.log(err);
+        console.log(err)
       }
     } else {
       setPasswordsMatch(false);
-      console.log("Email must include @citymail.cuny.edu");
+      console.log("Email must include @citymail.cuny.edu")
     }
-  };
+  }
 
   return (
     <div className="page-container">
       <div className="page-container-inner">
+
         {/* Logo */}
         <img className="w-20 h-20 mx-auto mb-5" src={ccnyimg} alt="CCNY Logo" />
 
         {/* SignUp Form */}
         <form onSubmit={handleSubmit}>
+
           {/* Username Input */}
           <div>
             <label className="block mb-2 text-indigo-500" htmlFor="username">
@@ -144,12 +149,7 @@ const Signup = () => {
           )}
 
           {/* SignUp Button */}
-          <button
-            className="w-full bg-indigo-700 hover:bg-purple-700 text-white font-bold py-2 px-4 mb-6 rounded transition-colors duration-300"
-            type="submit"
-          >
-            Sign up
-          </button>
+          <button className="w-full bg-indigo-700 hover:bg-purple-700 text-white font-bold py-2 px-4 mb-6 rounded transition-colors duration-300" type="submit">Sign up</button>
         </form>
 
         {/* Login Link */}
@@ -158,7 +158,7 @@ const Signup = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Signup;
+export default Signup

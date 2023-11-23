@@ -1,16 +1,18 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from "react"
+import { Link } from "react-router-dom"
 import '../customStyles.css'
+
+{/* Contact Us Page */}
 
 const Contact = () => {
   return (
     <div className="page-container">
       <div className="page-container-inner">
+        {/* Title */}
         <div className="mb-8">
-          <h1 className="text-center text-2xl text-indigo-700 font-bold">
-            Contact Us
-          </h1>
+          <h1 className="text-center text-2xl text-indigo-700 font-bold">Contact Us</h1>
         </div>
+
         {/* Contact Info */}
         <div className="mb-6">
           <h2 className="text-xl text-black font-bold">Visit Us</h2>
@@ -29,14 +31,9 @@ const Contact = () => {
         </div>
         <div className="mb-6">
           <h2 className="text-xl text-black font-bold">Visit our website</h2>
-          <a
-            href="https://www.ccny.cuny.edu/facilities"
-            target="_blank"
-            className="text-indigo-700"
-          >
-            Facilities website
-          </a>
+          <a href="https://www.ccny.cuny.edu/facilities" target="_blank" className="text-indigo-700">Facilities website=</a>
         </div>
+
         {/* Team Members */}
         <div className="mb-6">
           <h2 className="text-xl text-black font-bold">Team members</h2>
@@ -45,19 +42,15 @@ const Contact = () => {
           <p className="text-indigo-700">Myat Thu Ko</p>
           <p className="text-indigo-700">Kevin Perchersky</p>
         </div>
+
+        {/*Call To Action About Us Button */}
         <div className="flex items-center justify-center">
             <Link to="/about">
-              <button
-                className="button-hover"
-                type="button"
-              >
-                About Us
-              </button>
+              <button className="button-hover" type="button">About Us</button>
             </Link>
         </div>
       </div>
     </div>
-  );
-};
-
-export default Contact;
+  )
+}
+export default Contact

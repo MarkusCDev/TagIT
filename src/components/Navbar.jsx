@@ -1,27 +1,27 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useUserAuth } from "./UserAuth";
-import logo from "../assets/bus.png";
-import menu from "../assets/menu.png";
+import React, { useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
+import { useUserAuth } from "./UserAuth"
+import logo from "../assets/bus.png"
+import menu from "../assets/menu.png"
 
 const Navbar = () => {
-  const { user, logOut } = useUserAuth();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const navigate = useNavigate();
+  const { user, logOut } = useUserAuth()
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const navigate = useNavigate()
 
   const handleLogOut = async () => {
     try {
       await logOut();
-      console.log("you are logged out");
-      setIsMenuOpen(false);
-      navigate("about");
+      console.log("you are logged out")
+      setIsMenuOpen(false)
+      navigate("about")
     } catch (e) {
-      console.log("suss not working");
+      console.log("suss not working")
     }
   };
 
   const closeMenu = () => {
-    setIsMenuOpen(false);
+    setIsMenuOpen(false)
   };
 
   return (
@@ -122,4 +122,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default Navbar

@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Index.css enables tailwind css library ^ above imports */
+
 body {
   background-color: #C3B3FC;
   margin: 0;

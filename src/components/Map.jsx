@@ -1,25 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react"
 import {
   GoogleMap,
   InfoWindow,
   Marker,
   useJsApiLoader, 
   Polyline
-} from "@react-google-maps/api";
+} from "@react-google-maps/api"
 import buss from '../assets/buss.png'
-import { getDocs, collection, query, orderBy, limit, onSnapshot} from "firebase/firestore";
-import { db } from "../firebase";
-import polyline from "@mapbox/polyline";
+import { getDocs, collection, query, orderBy, limit, onSnapshot} from "firebase/firestore"
+import { db } from "../firebase"
+import polyline from "@mapbox/polyline"
 
 const MapComponent = () => {
   const { isLoaded, loadError } = useJsApiLoader({
     googleMapsApiKey: import.meta.env.VITE_APP_GOOGLE_API_KEY,
   });
 
-  const [activeInfoWindow, setActiveInfoWindow] = useState(null);
-  const [markers, setMarkers] = useState({});
-  const center = { lat: 40.81792206720871, lng: -73.94995404366331};
-  const containerStyle = { width: "100%", height: "550px"};
+  const [activeInfoWindow, setActiveInfoWindow] = useState(null)
+  const [markers, setMarkers] = useState({})
+  const center = { lat: 40.81792206720871, lng: -73.94995404366331}
+  const containerStyle = { width: "100%", height: "550px"}
   const {direction, setDirection} = ({})
   const shuttleIcon = {
     url: 'https://img.icons8.com/?size=77&id=46817&format=png', 
@@ -29,7 +29,7 @@ const MapComponent = () => {
 
   // gets the shuttle one data
   useEffect(() => {
-    const q1 = query(collection(db, "CCNY_Shuttle_1"), orderBy("datetime", "desc"), limit(1));
+    const q1 = query(collection(db, "CCNY_Shuttle_1"), orderBy("datetime", "desc"), limit(1))
 
     const unsubscribe1 = onSnapshot(q1, (querySnapshot) => {
       querySnapshot.forEach((doc) => {
@@ -45,17 +45,17 @@ const MapComponent = () => {
             label: { color: "black", text: "1" },
             draggable: false,
           }
-        }));
-      });
-    });
+        }))
+      })
+    })
 
-    return () => unsubscribe1();
+    return () => unsubscribe1()
   }, []);
 
 
   // get the shuttle two data
   useEffect(() => {
-    const q2 = query(collection(db, "CCNY_Shuttle_2"), orderBy("datetime", "desc"), limit(1));
+    const q2 = query(collection(db, "CCNY_Shuttle_2"), orderBy("datetime", "desc"), limit(1))
 
     const unsubscribe2 = onSnapshot(q2, (querySnapshot) => {
       querySnapshot.forEach((doc) => {
@@ -71,15 +71,15 @@ const MapComponent = () => {
             label: { color: "black", text: "2" },
             draggable: false,
           }
-        }));
-      });
-    });
+        }))
+      })
+    })
 
-    return () => unsubscribe2();
+    return () => unsubscribe2()
   }, []);
 
   useEffect(() => {
-    const q3 = query(collection(db, "CCNY_Shuttle_3"), orderBy("datetime", "desc"), limit(1));
+    const q3 = query(collection(db, "CCNY_Shuttle_3"), orderBy("datetime", "desc"), limit(1))
   
     const unsubscribe3 = onSnapshot(q3, (querySnapshot) => {
       querySnapshot.forEach((doc) => {
@@ -99,49 +99,49 @@ const MapComponent = () => {
       });
     });
   
-    return () => unsubscribe3();
-  }, []);
+    return () => unsubscribe3()
+  }, [])
   
 
   const mapClicked = (event) => {
-    console.log(event.latLng.lat(), event.latLng.lng());
-  };
+    console.log(event.latLng.lat(), event.latLng.lng())
+  }
 
   const markerClicked = (marker, index) => {
-    setActiveInfoWindow(index);
-    console.log(marker, index);
-  };
+    setActiveInfoWindow(index)
+    console.log(marker, index)
+  }
 
   const markerDragEnd = (event, index) => {
-    console.log(event.latLng.lat(), event.latLng.lng());
-  };
+    console.log(event.latLng.lat(), event.latLng.lng())
+  }
 
   const BOUNDS = {
     north: 40.83,
     south: 40.81,
     east: -73.94,
     west: -73.96,
-  };
+  }
 
   const onMapDragEnd = (map) => {
     const currentCenter = map.getCenter();
-    let newLat = currentCenter.lat();
-    let newLng = currentCenter.lng();
+    let newLat = currentCenter.lat()
+    let newLng = currentCenter.lng()
 
-    if (currentCenter.lat() > BOUNDS.north) newLat = BOUNDS.north;
-    if (currentCenter.lat() < BOUNDS.south) newLat = BOUNDS.south;
-    if (currentCenter.lng() > BOUNDS.east) newLng = BOUNDS.east;
-    if (currentCenter.lng() < BOUNDS.west) newLng = BOUNDS.west;
+    if (currentCenter.lat() > BOUNDS.north) newLat = BOUNDS.north
+    if (currentCenter.lat() < BOUNDS.south) newLat = BOUNDS.south
+    if (currentCenter.lng() > BOUNDS.east) newLng = BOUNDS.east
+    if (currentCenter.lng() < BOUNDS.west) newLng = BOUNDS.west
 
     if (newLat !== currentCenter.lat() || newLng !== currentCenter.lng()) {
-      map.setCenter({ lat: newLat, lng: newLng });
+      map.setCenter({ lat: newLat, lng: newLng })
     }
-  };
+  }
 
 
   function decodeAndFormatPolyline(encodedPolyline) {
-    const decodedPath = polyline.decode(encodedPolyline);
-    return decodedPath.map(point => ({ lat: point[0], lng: point[1] }));
+    const decodedPath = polyline.decode(encodedPolyline)
+    return decodedPath.map(point => ({ lat: point[0], lng: point[1] }))
   }
 
   //polyline for entire route
@@ -156,15 +156,13 @@ const MapComponent = () => {
   useEffect(() => {
     const intervalId = setInterval(() => {
       setBusOffset((prevOffset) => {
-        const newOffset = (parseFloat(prevOffset) + 0.5) % 100;
-        return `${newOffset}%`;
-      });
-    }, 20);
+        const newOffset = (parseFloat(prevOffset) + 0.5) % 100
+        return `${newOffset}%`
+      })
+    }, 20)
 
-    return () => clearInterval(intervalId);
-  }, []);
-
-
+    return () => clearInterval(intervalId)
+  }, [])
 
   return (
     isLoaded && (
@@ -285,4 +283,4 @@ const MapComponent = () => {
   );
 };
 
-export default MapComponent;
+export default MapComponent
