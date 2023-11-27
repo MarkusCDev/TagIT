@@ -175,26 +175,30 @@ const MapComponent = () => {
 
   useEffect(() => {
     let intervalId;
-  
+    // Calculate the increment step based on the shuttle1routeduration
+    const incrementStep = 100 / shuttle1routeduration; 
+
     const startInterval = () => {
       intervalId = setInterval(() => {
         setBusOffset((prevOffset) => {
-          const newOffset = (parseFloat(prevOffset) + 0.5);
+          // Use the incrementStep for updating the new offset
+          const newOffset = parseFloat(prevOffset) + incrementStep;
           if (newOffset >= 100) {
+            clearInterval(intervalId); // Clear the interval when it reaches 100%
             return '100%'; // Ensure the offset is exactly 100%
           }
           return `${newOffset}%`;
         });
-      }, shuttle1routeduration * 4.5);
+      }, 1000); // Runs every second
     };
-  
+
     // Clear any existing interval and start a new one
     clearInterval(intervalId);
     startInterval();
-  
+
     // Cleanup function to clear the interval when the component unmounts or the effect re-runs
     return () => clearInterval(intervalId);
-  }, [shuttle1routeduration]); // Dependency array includes shuttle1routeduration
+}, [shuttle1routeduration]); // Include shuttle1routeduration in the dependencies array
   
 
   ////////////////////////////////////////
@@ -230,26 +234,31 @@ const MapComponent = () => {
 
   useEffect(() => {
     let intervalId;
-  
+
+    // Calculate the increment step. The total number of updates is shuttle2routeduration (assuming it's in seconds), so divide 100 by shuttle2routeduration.
+    const incrementStep = 100 / shuttle2routeduration;
+
     const startInterval = () => {
       intervalId = setInterval(() => {
         setBusOffset2((prevOffset) => {
-          const newOffset = (parseFloat(prevOffset) + 1);
+          // Update the offset using the increment step
+          const newOffset = parseFloat(prevOffset) + incrementStep;
           if (newOffset >= 100) {
+            clearInterval(intervalId); // Clear the interval when it reaches 100%
             return '100%'; // Ensure the offset is exactly 100%
           }
           return `${newOffset}%`;
         });
-      }, shuttle2routeduration * 20);
+      }, 1000); // Set the interval to every second
     };
-  
+
     // Clear any existing interval and start a new one
     clearInterval(intervalId);
     startInterval();
-  
+
     // Cleanup function to clear the interval when the component unmounts or the effect re-runs
     return () => clearInterval(intervalId);
-  }, [shuttle2routeduration]); // Dependency array includes shuttle1routeduration
+}, [shuttle2routeduration]); // Dependency array includes shuttle2routeduration
 
   ////////////////////////////////////////
 
@@ -343,7 +352,7 @@ const MapComponent = () => {
         <Polyline
                 path={shuttle1route}
                 options={{
-                    strokeColor: "#0080FF",  // Color of the polyline. #5688f8 for blue line
+                    strokeColor: "#8c7dc4",  // Color of the polyline. #5688f8 for blue line
                     strokeOpacity: 1,        // Opacity of the polyline.
                     strokeWeight: 2,         
                     icons: [
@@ -351,7 +360,7 @@ const MapComponent = () => {
                         icon: {
                           path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
                           scale: 2,
-                          strokeColor: '#C93E36',
+                          strokeColor: '#0080FF',
                         },
                         offset: busOffset,
                       },
@@ -362,7 +371,7 @@ const MapComponent = () => {
         <Polyline
                 path={shuttle2route}
                 options={{
-                    strokeColor: "#FF7F00",  // Color of the polyline. #5688f8 for blue line
+                    strokeColor: "#8c7dc4",  // Color of the polyline. #5688f8 for blue line
                     strokeOpacity: 1,        // Opacity of the polyline.
                     strokeWeight: 2,         
                     icons: [
@@ -370,7 +379,7 @@ const MapComponent = () => {
                         icon: {
                           path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
                           scale: 2,
-                          strokeColor: '#C93E36',
+                          strokeColor: '#FF7F00',
                         },
                         offset: busOffset2,
                       },
