@@ -7,7 +7,8 @@ import {
   Polyline
 } from "@react-google-maps/api"
 import buss from '../assets/buss.png'
-import { getDocs, collection, query, orderBy, limit, onSnapshot} from "firebase/firestore"
+import { getDocs, collection, query, orderBy, limit, onSnapshot, where} from "firebase/firestore"
+
 import { db } from "../firebase"
 import polyline from "@mapbox/polyline"
 
@@ -33,7 +34,7 @@ const MapComponent = () => {
 
     const unsubscribe1 = onSnapshot(q1, (querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        console.log("1 datetime: ", doc.data().datetime, " lat: ", doc.data().locationlatitude, " long: ", doc.data().locationlongitude)
+        //console.log("1 datetime: ", doc.data().datetime, " lat: ", doc.data().locationlatitude, " long: ", doc.data().locationlongitude)
         setMarkers(prevMarkers => ({
           ...prevMarkers,
           shuttle1: {
@@ -59,7 +60,7 @@ const MapComponent = () => {
 
     const unsubscribe2 = onSnapshot(q2, (querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        console.log("2 datetime: ", doc.data().datetime, " lat: ", doc.data().locationlatitude, " long: ", doc.data().locationlongitude)
+        //console.log("2 datetime: ", doc.data().datetime, " lat: ", doc.data().locationlatitude, " long: ", doc.data().locationlongitude)
         setMarkers(prevMarkers => ({
           ...prevMarkers,
           shuttle2: {
@@ -78,43 +79,49 @@ const MapComponent = () => {
     return () => unsubscribe2()
   }, []);
 
-  useEffect(() => {
-    const q3 = query(collection(db, "CCNY_Shuttle_3"), orderBy("datetime", "desc"), limit(1))
+  //Shuttle Bus 3, uncomment to include
+
+  // useEffect(() => {
+  //   const q3 = query(collection(db, "CCNY_Shuttle_3"), orderBy("datetime", "desc"), limit(1))
   
-    const unsubscribe3 = onSnapshot(q3, (querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        console.log("3 datetime: ", doc.data().datetime, " lat: ", doc.data().locationlatitude, " long: ", doc.data().locationlongitude)
-        setMarkers(prevMarkers => ({
-          ...prevMarkers,
-          shuttle3: {
-            position: {
-              lat: doc.data().locationlatitude,
-              lng: doc.data().locationlongitude,
-            },
-            icon: shuttleIcon,
-            label: { color: "black", text: "3" },
-            draggable: false,
-          }
-        }));
-      });
-    });
+  //   const unsubscribe3 = onSnapshot(q3, (querySnapshot) => {
+  //     querySnapshot.forEach((doc) => {
+  //       console.log("3 datetime: ", doc.data().datetime, " lat: ", doc.data().locationlatitude, " long: ", doc.data().locationlongitude)
+  //       setMarkers(prevMarkers => ({
+  //         ...prevMarkers,
+  //         shuttle3: {
+  //           position: {
+  //             lat: doc.data().locationlatitude,
+  //             lng: doc.data().locationlongitude,
+  //           },
+  //           icon: shuttleIcon,
+  //           label: { color: "black", text: "3" },
+  //           draggable: false,
+  //         }
+  //       }));
+  //     });
+  //   });
   
-    return () => unsubscribe3()
-  }, [])
+  //   return () => unsubscribe3()
+  // }, [])
   
 
+  // Uncomment to click on map and console log lat/long
   const mapClicked = (event) => {
     console.log(event.latLng.lat(), event.latLng.lng())
   }
 
+
+  // Uncomment to click on bus icons and display lat/long
   const markerClicked = (marker, index) => {
     setActiveInfoWindow(index)
     console.log(marker, index)
   }
 
-  const markerDragEnd = (event, index) => {
-    console.log(event.latLng.lat(), event.latLng.lng())
-  }
+  // Uncomment to console log clicked lat/long
+  // const markerDragEnd = (event, index) => {
+  //   console.log(event.latLng.lat(), event.latLng.lng())
+  // }
 
   const BOUNDS = {
     north: 40.83,
@@ -137,7 +144,114 @@ const MapComponent = () => {
       map.setCenter({ lat: newLat, lng: newLng })
     }
   }
+  
+  const [shuttle1route, setShuttle1Route] = useState('') 
+  const [shuttle1routeduration, setShuttle1RouteDuration] = useState(0)
+  const [busOffset, setBusOffset] = useState('0%')
+  
+  function convertToSeconds(timeStr) { 
+    let seconds = parseInt(timeStr)
+    return seconds
+  }
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const q1 = query(collection(db, "CCNY_Shuttle_Routing"), orderBy("datetime", "desc"), limit(1), where("name", "==", "CCNY Shuttle 1"));
+        const unsubscribe1 = onSnapshot(q1, (querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            setShuttle1Route(decodeAndFormatPolyline(doc.data().polyline))
+            setShuttle1RouteDuration(convertToSeconds(doc.data().duration))
+            console.log(convertToSeconds(doc.data().duration))
+          })
+        })
+      } catch (e) {
+        console.log(e)
+      }
+    }
+  
+    fetchData()
+  }, [])
+
+  useEffect(() => {
+    let intervalId;
+  
+    const startInterval = () => {
+      intervalId = setInterval(() => {
+        setBusOffset((prevOffset) => {
+          const newOffset = (parseFloat(prevOffset) + 0.5);
+          if (newOffset >= 100) {
+            return '100%'; // Ensure the offset is exactly 100%
+          }
+          return `${newOffset}%`;
+        });
+      }, shuttle1routeduration * 4.5);
+    };
+  
+    // Clear any existing interval and start a new one
+    clearInterval(intervalId);
+    startInterval();
+  
+    // Cleanup function to clear the interval when the component unmounts or the effect re-runs
+    return () => clearInterval(intervalId);
+  }, [shuttle1routeduration]); // Dependency array includes shuttle1routeduration
+  
+
+  ////////////////////////////////////////
+  
+  const [shuttle2route, setShuttle2Route] = useState('') 
+  const [shuttle2routeduration, setShuttle2RouteDuration] = useState(0)
+  const [busOffset2, setBusOffset2] = useState('0%')
+  
+  function convertToSeconds(timeStr) { 
+    let seconds = parseInt(timeStr)
+    return seconds
+  }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const q1 = query(collection(db, "CCNY_Shuttle_Routing"), orderBy("datetime", "desc"), limit(1), where("name", "==", "CCNY Shuttle 2"))
+
+        const unsubscribe1 = onSnapshot(q1, (querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            setShuttle2Route(decodeAndFormatPolyline(doc.data().polyline))
+            setShuttle2RouteDuration(convertToSeconds(doc.data().duration))
+            console.log(convertToSeconds(doc.data().duration))
+          })
+        })
+      } catch (e) {
+        console.log(e)
+      }
+    }
+  
+    fetchData()
+  }, [])
+
+  useEffect(() => {
+    let intervalId;
+  
+    const startInterval = () => {
+      intervalId = setInterval(() => {
+        setBusOffset2((prevOffset) => {
+          const newOffset = (parseFloat(prevOffset) + 1);
+          if (newOffset >= 100) {
+            return '100%'; // Ensure the offset is exactly 100%
+          }
+          return `${newOffset}%`;
+        });
+      }, shuttle2routeduration * 20);
+    };
+  
+    // Clear any existing interval and start a new one
+    clearInterval(intervalId);
+    startInterval();
+  
+    // Cleanup function to clear the interval when the component unmounts or the effect re-runs
+    return () => clearInterval(intervalId);
+  }, [shuttle2routeduration]); // Dependency array includes shuttle1routeduration
+
+  ////////////////////////////////////////
 
   function decodeAndFormatPolyline(encodedPolyline) {
     const decodedPath = polyline.decode(encodedPolyline)
@@ -145,24 +259,13 @@ const MapComponent = () => {
   }
 
   //polyline for entire route
-  const formattedPath = decodeAndFormatPolyline("iqcxFbjjbMfEtC`@`@rA~CV\\lFlD`@PtL~@~CBpDJ~AbAJNlEpCZ_@pBgBr@sBYIg@[iAs@qBjGgC{AUBeBeAyDGqCEwL_Am@[_FcDa@k@iAqCu@q@sDeCaIgFiLwH}ByAqCmBvBwGz@`@lNdFcDbKjJjGpCfB")
+  const formattedPathRoute = decodeAndFormatPolyline("iqcxFbjjbMfEtC`@`@rA~CV\\lFlD`@PtL~@~CBpDJ~AbAJNlEpCZ_@pBgBr@sBYIg@[iAs@qBjGgC{AUBeBeAyDGqCEwL_Am@[_FcDa@k@iAqCu@q@sDeCaIgFiLwH}ByAqCmBvBwGz@`@lNdFcDbKjJjGpCfB")
 
   //polyline for bus temp route
-  const formattedPath2 = decodeAndFormatPolyline("mxaxFd|jbM}@k@yAtEYx@eC_BUBeBeAyDGqCEwL_Am@[_FcDa@k@iAqCu@q@sDeC")
+  const formattedPath1 = decodeAndFormatPolyline("{~bxFl{jbM^LlL|@~CBpDJ~AbAJNlEpCZ_@pBgBr@sBYIg@[")
 
-  // For animating polyline 
-  const [busOffset, setBusOffset] = useState('0%');
-  
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setBusOffset((prevOffset) => {
-        const newOffset = (parseFloat(prevOffset) + 0.5) % 100
-        return `${newOffset}%`
-      })
-    }, 20)
+  const formattedPath2 = decodeAndFormatPolyline("kkdxFfkibMfNbFcDbKjJjGpCfB")
 
-    return () => clearInterval(intervalId)
-  }, [])
 
   return (
     isLoaded && (
@@ -219,7 +322,7 @@ const MapComponent = () => {
       >
        {/* Polyline for Bus Route */}
         <Polyline
-                path={formattedPath}
+                path={formattedPathRoute}
                 options={{
                     strokeColor: "#8c7dc4",  // Color of the polyline. #5688f8 for blue line
                     strokeOpacity: 1,       // Opacity of the polyline.
@@ -238,23 +341,43 @@ const MapComponent = () => {
             />
         {/* Polyline for Bus 1 Routing */}
         <Polyline
-                path={formattedPath2}
+                path={shuttle1route}
                 options={{
-                    strokeColor: "#8c7dc4",  // Color of the polyline. #5688f8 for blue line
-                    strokeOpacity: 1,       // Opacity of the polyline.
-                    strokeWeight: 2,
+                    strokeColor: "#0080FF",  // Color of the polyline. #5688f8 for blue line
+                    strokeOpacity: 1,        // Opacity of the polyline.
+                    strokeWeight: 2,         
                     icons: [
                       {
                         icon: {
                           path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
-                          scale: 1,
-                          strokeColor: '#393',
+                          scale: 2,
+                          strokeColor: '#C93E36',
                         },
                         offset: busOffset,
                       },
                     ],        // Thickness of the polyline.
                 }}
             />
+        {/* Polyline for Bus 2 Routing*/}
+        <Polyline
+                path={shuttle2route}
+                options={{
+                    strokeColor: "#FF7F00",  // Color of the polyline. #5688f8 for blue line
+                    strokeOpacity: 1,        // Opacity of the polyline.
+                    strokeWeight: 2,         
+                    icons: [
+                      {
+                        icon: {
+                          path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
+                          scale: 2,
+                          strokeColor: '#C93E36',
+                        },
+                        offset: busOffset2,
+                      },
+                    ],        // Thickness of the polyline.
+                }}
+            />
+
         {Object.values(markers).map((marker, index) => (
           <Marker
             key={index}

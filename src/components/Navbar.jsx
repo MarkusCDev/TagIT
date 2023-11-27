@@ -4,6 +4,8 @@ import { useUserAuth } from "./UserAuth"
 import logo from "../assets/bus.png"
 import menu from "../assets/menu.png"
 
+{/* Copyright Footer */}
+
 const Navbar = () => {
   const { user, logOut } = useUserAuth()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -20,6 +22,7 @@ const Navbar = () => {
     }
   };
 
+  {/* Menu Handeling, for closing when interacting */}
   const closeMenu = () => {
     setIsMenuOpen(false)
   };

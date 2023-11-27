@@ -33,8 +33,8 @@ const Routing = () => {
         const q1 = query(collection(db, "CCNY_Shuttle_Routing"), orderBy("datetime", "desc"), limit(1), where("nextStop", "==", "W125"))
         const unsubscribe1 = onSnapshot(q1, (querySnapshot) => {
           querySnapshot.forEach((doc) => {
-            console.log("1 datetime: ", doc.data().datetime, " previous stop: ", doc.data().prevStop, " nest stop: ", doc.data().nextStop, " prev to next stop time: ", doc.data().duration)
-            console.log(secondsToCeilingMinutes(doc.data().duration))
+            //console.log("1 datetime: ", doc.data().datetime, " previous stop: ", doc.data().prevStop, " nest stop: ", doc.data().nextStop, " prev to next stop time: ", doc.data().duration)
+            //console.log(secondsToCeilingMinutes(doc.data().duration))
             setTo125th(secondsToCeilingMinutes(doc.data().duration))
           })
         })
@@ -54,8 +54,8 @@ const Routing = () => {
         const q1 = query(collection(db, "CCNY_Shuttle_Routing"), orderBy("datetime", "desc"), limit(1), where("nextStop", "==", "W145"))
         const unsubscribe1 = onSnapshot(q1, (querySnapshot) => {
           querySnapshot.forEach((doc) => {
-            console.log("2 datetime: ", doc.data().datetime, " previous stop: ", doc.data().prevStop, " nest stop: ", doc.data().nextStop, " prev to next stop time: ", doc.data().duration)
-            console.log(secondsToCeilingMinutes(doc.data().duration));
+            //console.log("2 datetime: ", doc.data().datetime, " previous stop: ", doc.data().prevStop, " nest stop: ", doc.data().nextStop, " prev to next stop time: ", doc.data().duration)
+            //console.log(secondsToCeilingMinutes(doc.data().duration));
             setTo145th(secondsToCeilingMinutes(doc.data().duration));
           })
         })
