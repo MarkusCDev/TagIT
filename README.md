@@ -1,9 +1,10 @@
 ﻿# TagIT
 
-domain coming soon
+Domain: coming soon
 
 ## Installation
-1) cd ccny-shuttle
-2) npm install
-3) ensure Env Variables are accurate
-4) npm run dev 
+1) `git clone https://github.com/MarkusCDev/TagIT.git`
+2) `cd ccny-shuttle`
+3) add .env file with api keys
+4) `npm install`
+6) `npm run dev`
