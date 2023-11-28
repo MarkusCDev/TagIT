@@ -8,7 +8,7 @@ import {
 } from "@react-google-maps/api"
 import buss from '../assets/buss.png'
 import { getDocs, collection, query, orderBy, limit, onSnapshot, where} from "firebase/firestore"
-
+import svgg from "../assets/purp.svg"
 import { db } from "../firebase"
 import polyline from "@mapbox/polyline"
 
@@ -162,6 +162,7 @@ const MapComponent = () => {
           querySnapshot.forEach((doc) => {
             setShuttle1Route(decodeAndFormatPolyline(doc.data().polyline))
             setShuttle1RouteDuration(convertToSeconds(doc.data().duration))
+            setBusOffset('0%')
             console.log(convertToSeconds(doc.data().duration))
           })
         })
@@ -221,6 +222,7 @@ const MapComponent = () => {
           querySnapshot.forEach((doc) => {
             setShuttle2Route(decodeAndFormatPolyline(doc.data().polyline))
             setShuttle2RouteDuration(convertToSeconds(doc.data().duration))
+            setBusOffset2('0%')
             console.log(convertToSeconds(doc.data().duration))
           })
         })
@@ -275,6 +277,25 @@ const MapComponent = () => {
 
   const formattedPath2 = decodeAndFormatPolyline("kkdxFfkibMfNbFcDbKjJjGpCfB")
 
+
+  const symbolThree = {
+    path: "M -2,-2 2,2 M 2,-2 -2,2",
+    strokeColor: "#292",
+    strokeWeight: 4,
+  };
+
+  const customSymbol = {
+    path: "M12 0C5 0 3 2 3 8v33l1 3v3c0 2 1 3 3 3h4c2 0 3-1 3-3v-1h22v1c0 2 1 3 3 3h4c2 0 3-1 3-3v-3l1-3V9c0-4-1-9-7-9Zm3 4h21l1 1v2l-1 1H15l-1-1V5l1-1Zm-4 7h28c2 0 3 1 3 3v12c0 2-2 3-3 3H11c-2 0-3-1-3-3V14c0-2 1-3 3-3Zm-9 1-2 2v8l2 2Zm46 0v12l2-2v-8l-2-2ZM12 34a3 3 0 1 1 0 7 3 3 0 0 1 0-7Zm27 0a3 3 0 1 1 0 7 3 3 0 0 1 0-7Z",
+    fillColor: "#F1B30E", // Fill color added, example red
+    fillOpacity: 1,      // You might need to add fillOpacity (1 for fully opaque)
+    strokeColor: "#000000",
+    strokeWeight: 1.7,
+    scale: 0.6,
+    scaledSize: { width: 20, height: 20 }, // Adjusted size to make it smaller
+    anchor: { x: 10, y: 10 }, // Adjust anchor accordingly
+};
+
+  
 
   return (
     isLoaded && (
@@ -378,16 +399,17 @@ const MapComponent = () => {
                       {
                         icon: {
                           path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
-                          scale: 2,
+                          scale: 3,
                           strokeColor: '#FF7F00',
                         },
+                        // icon: customSymbol,
                         offset: busOffset2,
                       },
                     ],        // Thickness of the polyline.
                 }}
             />
 
-        {Object.values(markers).map((marker, index) => (
+        {/* {Object.values(markers).map((marker, index) => (
           <Marker
             key={index}
             position={marker.position}
@@ -408,7 +430,7 @@ const MapComponent = () => {
               </InfoWindow>
             )}
           </Marker>
-        ))}
+        ))} */}
       </GoogleMap>
     )
 
