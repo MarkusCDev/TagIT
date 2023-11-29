@@ -40,7 +40,7 @@ const MapComponent = () => {
     
     if (traveledPercent > 100){ return "100%" }
     if (traveledPercent < 0 ){return "0%" }
-    return remainingPercentString
+    return traveledPercent
   }
 
   // gets the shuttle one data
@@ -193,10 +193,10 @@ const MapComponent = () => {
   }, [])
 
   useEffect(() => {
+    console.log("timer")
     let intervalId;
     // Calculate the increment step based on the shuttle1routeduration
     const incrementStep = 100 / shuttle1routeduration; 
-
     const startInterval = () => {
       intervalId = setInterval(() => {
         setBusOffset((prevOffset) => {
@@ -243,7 +243,7 @@ const MapComponent = () => {
             // setBusOffset2('0%')
             const pt = PolyPercentage(doc.data().datetime, doc.data().duration)
             setBusOffset2(pt)
-            console.log("CCNY Shuttle 1: datetime", doc.data().datetime," arrivaltime", doc.data().arrivaltime, " duration", doc.data().duration, " polyline", pt)
+            console.log("CCNY Shuttle 2: datetime", doc.data().datetime," arrivaltime", doc.data().arrivaltime, " duration", doc.data().duration, " polyline", pt)
             console.log(convertToSeconds(doc.data().duration))
           })
         })

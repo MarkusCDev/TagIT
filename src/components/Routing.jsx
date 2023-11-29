@@ -3,10 +3,10 @@ import { collection, query, orderBy, limit, onSnapshot, where, and } from "fireb
 import { db } from "../firebase"
 
 const Routing = () => {
-  const [to145th, setTo145th] = useState(30)
-  const [to145thtonac, setTo145thToNac] = useState(30)
-  const [to125th, setTo125th] = useState(30)
-  const [to125thtonac, setTo125thToNac] = useState(30)
+  const [to145th, setTo145th] = useState("--")
+  const [to145thtonac, setTo145thToNac] = useState("--")
+  const [to125th, setTo125th] = useState("--")
+  const [to125thtonac, setTo125thToNac] = useState("--")
 
   // function secondsToCeilingMinutes(s) {
   //   var seconds = parseInt(s.slice(0, -1), 10)
@@ -31,15 +31,20 @@ const Routing = () => {
     const differenceInMilliseconds = arrivalTime - currentTime;
     const differenceInSeconds = Math.ceil((differenceInMilliseconds / 1000) / 60)
     console.log("Difference", differenceInSeconds)
+
+    if (differenceInSeconds < 0) {
+      return "--"
+    }
+
     return differenceInSeconds;
   }
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setTo145th((prevTime) => (prevTime > 0 ? prevTime - 1 : 15))
-      setTo125th((prevTime) => (prevTime > 0 ? prevTime - 1 : 20))
-      setTo145thToNac((prevTime) => (prevTime > 0 ? prevTime - 1 : 25))
-      setTo125thToNac((prevTime) => (prevTime > 0 ? prevTime - 1 : 35))
+      setTo145th((prevTime) => (prevTime > 0 ? prevTime - 1 : "--"))
+      setTo125th((prevTime) => (prevTime > 0 ? prevTime - 1 : "--"))
+      setTo145thToNac((prevTime) => (prevTime > 0 ? prevTime - 1 : "--"))
+      setTo125thToNac((prevTime) => (prevTime > 0 ? prevTime - 1 : "--"))
     }, 60000) // Decrements every 60 seconds
 
     // Cleanup
