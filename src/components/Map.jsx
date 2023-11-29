@@ -28,6 +28,21 @@ const MapComponent = () => {
     anchor: { x: 15, y: 15 },
   };
 
+  function PolyPercentage(timestamp, duration) { 
+    const formattedDuration = parseInt(duration.slice(0, -1), 10)
+    const steps = 100/formattedDuration
+    const currentTime = new Date()
+    const initalTime = new Date(timestamp)
+    const elapsedTime = (currentTime - initalTime) / 1000
+    const traveledPercent = (steps * elapsedTime)
+    const remainingPercent = 100 - traveledPercent
+    const remainingPercentString = remainingPercent.toString() + "%"
+    
+    if (traveledPercent > 100){ return "100%" }
+    if (traveledPercent < 0 ){return "0%" }
+    return remainingPercentString
+  }
+
   // gets the shuttle one data
   useEffect(() => {
     const q1 = query(collection(db, "CCNY_Shuttle_1"), orderBy("datetime", "desc"), limit(1))
@@ -162,7 +177,10 @@ const MapComponent = () => {
           querySnapshot.forEach((doc) => {
             setShuttle1Route(decodeAndFormatPolyline(doc.data().polyline))
             setShuttle1RouteDuration(convertToSeconds(doc.data().duration))
-            setBusOffset('0%')
+            // setBusOffset('0%')
+            const pt = PolyPercentage(doc.data().datetime, doc.data().duration)
+            setBusOffset(pt)
+            console.log("CCNY Shuttle 1: datetime", doc.data().datetime," arrivaltime", doc.data().arrivaltime, " duration", doc.data().duration, " polyline", pt)
             console.log(convertToSeconds(doc.data().duration))
           })
         })
@@ -222,7 +240,10 @@ const MapComponent = () => {
           querySnapshot.forEach((doc) => {
             setShuttle2Route(decodeAndFormatPolyline(doc.data().polyline))
             setShuttle2RouteDuration(convertToSeconds(doc.data().duration))
-            setBusOffset2('0%')
+            // setBusOffset2('0%')
+            const pt = PolyPercentage(doc.data().datetime, doc.data().duration)
+            setBusOffset2(pt)
+            console.log("CCNY Shuttle 1: datetime", doc.data().datetime," arrivaltime", doc.data().arrivaltime, " duration", doc.data().duration, " polyline", pt)
             console.log(convertToSeconds(doc.data().duration))
           })
         })
@@ -380,7 +401,7 @@ const MapComponent = () => {
                       {
                         icon: {
                           path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
-                          scale: 2,
+                          scale: 4,
                           strokeColor: '#0080FF',
                         },
                         offset: busOffset,
@@ -399,7 +420,7 @@ const MapComponent = () => {
                       {
                         icon: {
                           path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
-                          scale: 3,
+                          scale: 4,
                           strokeColor: '#FF7F00',
                         },
                         // icon: customSymbol,
