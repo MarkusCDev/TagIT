@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from "react"
 import {
   GoogleMap,
-  InfoWindow,
-  Marker,
   useJsApiLoader, 
   Polyline
 } from "@react-google-maps/api"
-import buss from '../assets/buss.png'
 import { getDocs, collection, query, orderBy, limit, onSnapshot, where} from "firebase/firestore"
-import svgg from "../assets/purp.svg"
 import { db } from "../firebase"
 import polyline from "@mapbox/polyline"
 
@@ -17,11 +13,9 @@ const MapComponent = () => {
     googleMapsApiKey: import.meta.env.VITE_APP_GOOGLE_API_KEY,
   });
 
-  const [activeInfoWindow, setActiveInfoWindow] = useState(null)
   const [markers, setMarkers] = useState({})
   const center = { lat: 40.81792206720871, lng: -73.94995404366331}
   const containerStyle = { width: "100%", height: "550px"}
-  const {direction, setDirection} = ({})
   const shuttleIcon = {
     url: 'https://img.icons8.com/?size=77&id=46817&format=png', 
     scaledSize: { width: 33, height: 33 },
@@ -293,18 +287,6 @@ const MapComponent = () => {
   //polyline for entire route
   const formattedPathRoute = decodeAndFormatPolyline("iqcxFbjjbMfEtC`@`@rA~CV\\lFlD`@PtL~@~CBpDJ~AbAJNlEpCZ_@pBgBr@sBYIg@[iAs@qBjGgC{AUBeBeAyDGqCEwL_Am@[_FcDa@k@iAqCu@q@sDeCaIgFiLwH}ByAqCmBvBwGz@`@lNdFcDbKjJjGpCfB")
 
-  //polyline for bus temp route
-  const formattedPath1 = decodeAndFormatPolyline("{~bxFl{jbM^LlL|@~CBpDJ~AbAJNlEpCZ_@pBgBr@sBYIg@[")
-
-  const formattedPath2 = decodeAndFormatPolyline("kkdxFfkibMfNbFcDbKjJjGpCfB")
-
-
-  const symbolThree = {
-    path: "M -2,-2 2,2 M 2,-2 -2,2",
-    strokeColor: "#292",
-    strokeWeight: 4,
-  };
-
   const customSymbol = {
     path: "M12 0C5 0 3 2 3 8v33l1 3v3c0 2 1 3 3 3h4c2 0 3-1 3-3v-1h22v1c0 2 1 3 3 3h4c2 0 3-1 3-3v-3l1-3V9c0-4-1-9-7-9Zm3 4h21l1 1v2l-1 1H15l-1-1V5l1-1Zm-4 7h28c2 0 3 1 3 3v12c0 2-2 3-3 3H11c-2 0-3-1-3-3V14c0-2 1-3 3-3Zm-9 1-2 2v8l2 2Zm46 0v12l2-2v-8l-2-2ZM12 34a3 3 0 1 1 0 7 3 3 0 0 1 0-7Zm27 0a3 3 0 1 1 0 7 3 3 0 0 1 0-7Z",
     fillColor: "#F1B30E", // Fill color added, example red
@@ -315,8 +297,6 @@ const MapComponent = () => {
     scaledSize: { width: 20, height: 20 }, // Adjusted size to make it smaller
     anchor: { x: 10, y: 10 }, // Adjust anchor accordingly
 };
-
-  
 
   return (
     isLoaded && (
@@ -378,16 +358,6 @@ const MapComponent = () => {
                     strokeColor: "#8c7dc4",  // Color of the polyline. #5688f8 for blue line
                     strokeOpacity: 1,       // Opacity of the polyline.
                     strokeWeight: 2,
-                    // icons: [
-                    //   {
-                    //     icon: {
-                    //       path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
-                    //       scale: 1,
-                    //       strokeColor: '#393',
-                    //     },
-                    //     offset: busOffset,
-                    //   },
-                    // ],        
                 }}
             />
         {/* Polyline for Bus 1 Routing */}
@@ -429,29 +399,6 @@ const MapComponent = () => {
                     ],        // Thickness of the polyline.
                 }}
             />
-
-        {/* {Object.values(markers).map((marker, index) => (
-          <Marker
-            key={index}
-            position={marker.position}
-            icon={marker.icon}
-            label={marker.label}
-            draggable={marker.draggable}
-            onDragEnd={(event) => markerDragEnd(event, index)}
-            onClick={(event) => markerClicked(marker, index)}
-          >
-            {activeInfoWindow === index && (
-              <InfoWindow
-                position={marker.position}
-                onCloseClick={() => setActiveInfoWindow(null)}
-              >
-                <b>
-                  {marker.position.lat}, {marker.position.lng}
-                </b>
-              </InfoWindow>
-            )}
-          </Marker>
-        ))} */}
       </GoogleMap>
     )
 

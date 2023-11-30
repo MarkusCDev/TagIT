@@ -7,23 +7,6 @@ const Routing = () => {
   const [to145thtonac, setTo145thToNac] = useState("--")
   const [to125th, setTo125th] = useState("--")
   const [to125thtonac, setTo125thToNac] = useState("--")
-
-  // function secondsToCeilingMinutes(s) {
-  //   var seconds = parseInt(s.slice(0, -1), 10)
-  //   var minutes = Math.ceil(seconds / 60)
-  //   return minutes;
-  // }
-
-  // function calculateRemainingTime(durationString, serverDateTime) {
-  //   const currentTime = new Date();
-  //   const endTime = new Date(serverDateTime);
-  //   endTime.setSeconds(endTime.getSeconds() + parseInt(durationString.slice(0, -1), 10));
-  
-  //   const differenceInSeconds = (endTime - currentTime) / 1000;
-  //   const remainingMinutes = Math.ceil(differenceInSeconds / 60);
-  
-  //   return remainingMinutes > 0 ? remainingMinutes : 0; // Ensure we don't go negative
-  // }
   
   function getTimeDifferenceInSeconds(arrivalTimeString) {
     const arrivalTime = new Date(arrivalTimeString);
@@ -51,15 +34,6 @@ const Routing = () => {
     return () => clearInterval(timer)
   }, [])
 
-  // Uncomment for Cloud Functions Timings
-  // useEffect(() => {
-  //   const timer = setInterval(() => {
-  //     setTo125th((prevTime) => (prevTime > 0 ? prevTime - 1 : 0)); // Reset to 0 if we've reached the end
-  //   }, 60000); // Decrements every 60 seconds
-  
-  //   return () => clearInterval(timer);
-  // }, []);
-
   //NAC to 125
   useEffect(() => {
     const fetchData = async () => {
@@ -71,7 +45,6 @@ const Routing = () => {
             //console.log(secondsToCeilingMinutes(doc.data().duration))
             //setTo125th(secondsToCeilingMinutes(doc.data().duration))
             setTo125th(getTimeDifferenceInSeconds(doc.data().arrivaltime))
-
           })
         })
       } catch (e) {
@@ -80,34 +53,6 @@ const Routing = () => {
     };
     fetchData()
   }, [])
-
-  //////////////////////////////////////////////////////////////////
-  // Uncomment for Cloud functions
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await fetch("https://us-central1-ccny-shuttle-a35ec.cloudfunctions.net/getBusTimings"); // URL of your deployed function
-  //       const data = await response.json();
-
-  //       // Assuming data is an array of your timings
-  //         // Or however you've structured your response
-  //         // const duration = data[0].duration
-  //         // setTo125th(secondsToCeilingMinutes(duration));
-  //       const durationString = data[0].duration;
-  //       const serverDateTime = data[0].datetime;
-  //       const remainingTime = calculateRemainingTime(durationString, serverDateTime);
-  //       setTo125th(remainingTime);
-          
-  //     } catch (e) {
-  //       console.log("error", e);
-  //     }
-  //   };
-
-
-  //   fetchData();
-  //   console.log("baki")
-  // }, []);
-  ///////////////////////////////////////////////////////////
 
   // NAC to 145
   useEffect(() => {
@@ -119,6 +64,7 @@ const Routing = () => {
             //console.log("2 datetime: ", doc.data().datetime, " previous stop: ", doc.data().prevStop, " nest stop: ", doc.data().nextStop, " prev to next stop time: ", doc.data().duration)
             // console.log(secondsToCeilingMinutes(doc.data().duration));
             setTo145th(getTimeDifferenceInSeconds(doc.data().arrivaltime))
+            
           })
         })
       } catch (e) {
@@ -158,7 +104,6 @@ const Routing = () => {
           querySnapshot.forEach((doc) => {
             //setTo125thToNac(secondsToCeilingMinutes(doc.data().duration))
             setTo125thToNac(getTimeDifferenceInSeconds(doc.data().arrivaltime))
-
           })
         })
       } catch (e) {
