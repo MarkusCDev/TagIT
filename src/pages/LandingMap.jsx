@@ -21,7 +21,6 @@ const LandingMap = () => {
       const docRef = doc(db, "admins", "admin_role")
       const docSnap = await getDoc(docRef)
       if (docSnap.data().emails.includes(currentUserEmail)) {
-        console.log("true")
         setIsAdmin(true)
       } 
     }

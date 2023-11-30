@@ -45,7 +45,7 @@ const Newest = () => {
                 const decodedPoly2 = decodeAndFormatPolyline(doc.data().polyline)
                 console.log("CCNY Shuttle 2: datetime", doc.data().datetime, " arrivaltime", doc.data().arrivaltime, " duration", doc.data().duration, " polyline", decodedPoly2, " delta_duration", doc.data().duration_delta);
                 setShuttle2Route(decodedPoly2)
-                setShuttle2Duration(convertToSeconds(doc.data().duration))
+                setShuttle2Duration(convertToSeconds(doc.data().duration_delta))
                 //setShuttle1Position(null)
                 setShuttle2Offset(startHere(doc.data().datetime, doc.data().duration_delta))
               });
@@ -88,7 +88,7 @@ const Newest = () => {
             interpolatedPoints.push(points[points.length - 1]); // Ensure the last point is added
         }
     
-        console.log(interpolatedPoints.length)
+        //console.log(interpolatedPoints.length)
         return interpolatedPoints;
     };
     
@@ -131,15 +131,27 @@ const Newest = () => {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    function startHere(inital_timestamp, delta_duration) {
-        const currentTime = new Date()
-        const initalTime = new Date(inital_timestamp)
-        const elapsedTime = Math.floor((currentTime - initalTime) / 1000)
-        console.log("elapsed time", elapsedTime)
+    function startHere(initial_timestamp, delta_duration) {
+        const currentTime = new Date();
+        
+        // Replace double spaces with a single space and add 'T' between date and time
+        const formattedTimestamp = initial_timestamp.replace("  ", "T");
+        const initialTime = new Date(formattedTimestamp);
+    
+        if (isNaN(initialTime)) {
+            console.error("Invalid initial date:", formattedTimestamp);
+            return 0; // Or handle the error as appropriate
+        }
+    
+        const elapsedTime = Math.floor((currentTime - initialTime) / 1000);
+        
+        console.log("int time:", initialTime)
+        console.log("elapsed time:", elapsedTime)
         if (elapsedTime > delta_duration) {return delta_duration - 1}
         if (elapsedTime < 0) {return 0}
         return elapsedTime
     }
+    
 
     function convertToSeconds(timeStr) { 
         let seconds = parseInt(timeStr)

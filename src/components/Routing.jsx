@@ -13,8 +13,7 @@ const Routing = () => {
     const currentTime = new Date();
     const differenceInMilliseconds = arrivalTime - currentTime;
     const differenceInSeconds = Math.ceil((differenceInMilliseconds / 1000) / 60)
-    console.log("Difference", differenceInSeconds)
-
+    console.log("difference", differenceInSeconds)
     if (differenceInSeconds < 0) {
       return "--"
     }
