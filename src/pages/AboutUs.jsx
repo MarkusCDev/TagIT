@@ -26,9 +26,9 @@ const AboutUs = () => {
         <div className="mb-6 text-left">
           <h2 className="text-lg sm:text-xl text-indigo-700 font-bold mb-4">About the Project</h2>
           <p className="text-indigo-700">
-            The CCNY Shuttle Bus Tracker is a tracking project designed to make
+            The Tag!T CCNY Shuttle Bus Tracker is a tracking project designed to make
             campus transportation easier and more accessible for CCNY students.
-            Our platform provides up-to-date information on shuttle bus
+            Our platform provides information on shuttle bus
             locations, routes, and estimated arrival times, helping you to plan
             your journey effectively and arrive on time, every time.
           </p>

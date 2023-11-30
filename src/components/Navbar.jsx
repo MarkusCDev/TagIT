@@ -33,7 +33,7 @@ const Navbar = () => {
         <Link to="/about" className="flex items-center">
           <img src={logo} className="h-10 mr-3" />
           <span className="self-center text-2xl font-semibold whitespace-nowrap">
-            Shuttle
+            CCNY Shuttle
           </span>
         </Link>
         <button

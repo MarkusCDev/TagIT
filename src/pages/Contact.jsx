@@ -13,6 +13,20 @@ const Contact = () => {
           <h1 className="text-center text-2xl text-indigo-700 font-bold">Contact Us</h1>
         </div>
 
+        {/* Team Members */}
+        <div className="mb-6">
+          <h2 className="text-xl text-black font-bold">Team members</h2>
+          <p className="text-indigo-700">Mengwai Chan</p>
+          <p className="text-indigo-700">Markus Chmiel</p>
+          <p className="text-indigo-700">Myat Thu Ko</p>
+          <p className="text-indigo-700">Kevin Perchersky</p>
+        </div>
+
+        <div className="mb-6">
+          <h2 className="text-xl text-black font-bold">Team Contact</h2>
+          <p className="text-indigo-700">ccnyshuttle@outlook.com</p>
+        </div>
+
         {/* Contact Info */}
         <div className="mb-6">
           <h2 className="text-xl text-black font-bold">Visit Us</h2>
@@ -31,16 +45,7 @@ const Contact = () => {
         </div>
         <div className="mb-6">
           <h2 className="text-xl text-black font-bold">Visit our website</h2>
-          <a href="https://www.ccny.cuny.edu/facilities" target="_blank" className="text-indigo-700">Facilities website=</a>
-        </div>
-
-        {/* Team Members */}
-        <div className="mb-6">
-          <h2 className="text-xl text-black font-bold">Team members</h2>
-          <p className="text-indigo-700">Mengwai Chan</p>
-          <p className="text-indigo-700">Markus Chmiel</p>
-          <p className="text-indigo-700">Myat Thu Ko</p>
-          <p className="text-indigo-700">Kevin Perchersky</p>
+          <a href="https://www.ccny.cuny.edu/facilities" target="_blank" className="text-indigo-700">Go To Facilities website</a>
         </div>
 
         {/*Call To Action About Us Button */}
