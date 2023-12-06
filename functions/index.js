@@ -25,28 +25,51 @@ const cors = require('cors')({ origin: true }); // Include origin or a specific 
 
 admin.initializeApp();
 
-exports.getBusTimings = functions.https.onRequest((request, response) => {
-  return cors(request, response, async () => {
-    // Rest of your function...
-    const firestore = admin.firestore();
-    
+exports.getBusInfo = functions.https.onRequest((request, repsonse) => {
+  return cors(request, reponse, async () => {
+    const firestore = admin.firestore()
+
     try {
-      const querySnapshot = await firestore.collection("CCNY_Shuttle_Routing")
-                                        .orderBy("datetime", "desc")
-                                        .limit(1)
-                                        .where("nextStop", "==", "W125")
-                                        .get();
+      const busQuery = await firestore.collection("CCNY_Shuttle_Routing").orderBy("datetime", "desc").limit(4).get()
 
-      let timings = [];
-      querySnapshot.forEach((doc) => {
-        const data = doc.data();
-        timings.push(data); // Modify this based on how you want to structure the response
-      });
+        timings = []
 
-      response.status(200).send(timings);
+        busQuery.forEach((doc) => {
+          const data = doc.data()
+          timing.push(data)
+        })
+        reponse.status(200).send(timings)
     } catch (e) {
-      console.log(e);
-      response.status(500).send(e);
+      console.log(e)
+      reponse.status(500).send(e)
     }
-  });
-});
+  })
+})
+// exports.getBusTimings = functions.https.onRequest((request, response) => {
+//   return cors(request, response, async () => {
+//     // Rest of your function...
+//     const firestore = admin.firestore();
+    
+//     try {
+//       const querySnapshot = await firestore.collection("CCNY_Shuttle_Routing")
+//                                         .orderBy("datetime", "desc")
+//                                         .limit(1)
+//                                         .where("nextStop", "==", "W125")
+//                                         .get();
+
+//       let timings = [];
+//       querySnapshot.forEach((doc) => {
+//         const data = doc.data();
+//         timings.push(data); // Modify this based on how you want to structure the response
+//       });
+
+//       response.status(200).send(timings);
+//     } catch (e) {
+//       console.log(e);
+//       response.status(500).send(e);
+//     }
+//   });
+// });
+
+
+

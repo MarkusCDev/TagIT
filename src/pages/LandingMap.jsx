@@ -16,6 +16,25 @@ const LandingMap = () => {
   const currentUserEmail = user.email
   const [showMap, setShowMap] = useState(false)
 
+  const [busInfo, setBusInfo] = useState([])
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("https://us-central1-ccny-shuttle-a35ec.cloudfunctions.net/getBusTimings"); // URL of your deployed function
+        const data = await response.json();
+        setBusInfo(data)
+      } catch (e) {
+        console.log("error", e);
+      }
+    };
+
+
+    fetchData();
+    console.log("baki")
+  }, []);
+
   useEffect(() => {
     const retdata = async () => {
       const docRef = doc(db, "admins", "admin_role")

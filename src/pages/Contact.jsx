@@ -41,13 +41,13 @@ const Contact = () => {
           <p class="text-indigo-700">
             To learn more about Facility Department,{" "}
             <a
-              href="#"
+              href="https://www.ccny.cuny.edu/facilities"
               class="inline-flex items-center font-medium text-indigo-700 hover:underline"
             >
               visit the website
               <svg
                 class="w-4 h-4 ms-2 rtl:rotate-180"
-                aria-hidden="true"
+                aria-hidden="true"Z
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 14 10"
