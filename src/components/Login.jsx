@@ -99,28 +99,13 @@ const Login = () => {
           </div>
 
           {/* Submit Button */}
-          <button
-            className="w-full bg-indigo-700 hover:bg-purple-700 text-white font-bold py-2 px-4 mb-6 rounded transition-colors duration-300"
-            type="submit"
-          >
-            Login
-          </button>
+          <button className="w-full bg-indigo-700 hover:bg-purple-700 text-white font-bold py-2 px-4 mb-6 rounded transition-colors duration-300"type="submit">Login</button>
         </form>
 
         {/* Additional Links */}
         <div className="flex justify-between">
-          <Link
-            className="text-indigo-700 hover:text-purple-700 text-sm"
-            to="/reset"
-          >
-            Forgot Password?
-          </Link>
-          <Link
-            className="text-indigo-700 hover:text-purple-700 text-sm"
-            to="/signup"
-          >
-            New? Create an account
-          </Link>
+          <Link className="text-indigo-700 hover:text-purple-700 text-sm" to="/reset">Forgot Password?</Link>
+          <Link className="text-indigo-700 hover:text-purple-700 text-sm" to="/signup">New? Create an account</Link>
         </div>
       </div>
     </div>

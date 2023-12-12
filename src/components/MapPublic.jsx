@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, Polyline, Marker } from 'react-leaflet';
-import { getDocs, collection, query, orderBy, limit, onSnapshot, where} from "firebase/firestore"
-import { db } from "../firebase"
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import polyline from '@mapbox/polyline';
@@ -10,7 +8,7 @@ import shuttle2 from '../assets/shuttle2R.png'
 import mta from '../assets/mta.png'
 import castle from '../assets/castle.png'
 
-const Newest = () => {
+const MapPublic = ( {shuttle1prop, shuttle2prop} ) => {
     const [shuttle1route, setShuttle1Route] = useState('')
     const [shuttle2route, setShuttle2Route] = useState('')
     const [shuttle1duration, setShuttle1Duration] = useState('')
@@ -20,53 +18,50 @@ const Newest = () => {
     const [shutte1offset, setShuttle1Offset] = useState(0)
     const [shutte2offset, setShuttle2Offset] = useState(0)
 
-    //////////////////////////// Firebase Query /////////////////////////////////////////
 
-    useEffect(() => {
-        const fetchData = async () => {
-          try {
-            //Query for CCNY Shuttle 1
-            const q1 = query(collection(db, "CCNY_Shuttle_Routing"), orderBy("datetime", "desc"), limit(1), where("name", "==", "CCNY Shuttle 1"));
-            const unsubscribe1 = onSnapshot(q1, (querySnapshot) => {
-              querySnapshot.forEach((doc) => {
-                const decodedPoly1 = decodeAndFormatPolyline(doc.data().polyline)
-                console.log("CCNY Shuttle 1: datetime", doc.data().datetime, " arrivaltime", doc.data().arrivaltime, " duration", doc.data().duration, " polyline", decodedPoly1, " delta_duration", doc.data().duration_delta);
-                setShuttle1Route(decodedPoly1)
-                setShuttle1Duration(convertToSeconds(doc.data().duration_delta))
-                // setShuttle1Position(null)
-                setShuttle1Offset(startHere(doc.data().datetime, doc.data().duration_delta))
-              });
-            });
-      
-            // Query for CCNY Shuttle 2
-            const q2 = query(collection(db, "CCNY_Shuttle_Routing"), orderBy("datetime", "desc"), limit(1), where("name", "==", "CCNY Shuttle 2"));
-            const unsubscribe2 = onSnapshot(q2, (querySnapshot) => {
-              querySnapshot.forEach((doc) => {
-                const decodedPoly2 = decodeAndFormatPolyline(doc.data().polyline)
-                console.log("CCNY Shuttle 2: datetime", doc.data().datetime, " arrivaltime", doc.data().arrivaltime, " duration", doc.data().duration, " polyline", decodedPoly2, " delta_duration", doc.data().duration_delta);
-                setShuttle2Route(decodedPoly2)
-                setShuttle2Duration(convertToSeconds(doc.data().duration_delta))
-                //setShuttle1Position(null)
-                setShuttle2Offset(startHere(doc.data().datetime, doc.data().duration_delta))
-              });
-            });
-      
-            // Returning a cleanup function that unsubscribes from both queries
-            return () => {
-              unsubscribe1();
-              unsubscribe2();
-            };
-          } catch (e) {
-            console.log(e);
-          }
-        };
-      
-        fetchData();
-      }, []);
-      
+    //////////////////////////// Hardcoded PolyLine //////////////////////////////////////
+
+    // Used to ensure bus polyline updates once it reaaches a train stop (145/125)
+    // despite no airtag updates it will show the bus going back to campus
+
+    const To145Poly = "iqcxFbjjbMaIgFiLwH}ByAqCmBvBwGz@`@"
+    const ToNacFrom145Poly = "kkdxFfkibMfNbFcDbKjJjGpCfB"
+    const To125Poly =  "iqcxFbjjbMfEtC`@`@rA~CV\\lFlD`@PtL~@~CBpDJ~AbAJNlEpCZ_@pBgBr@sBYIg@["
+    const ToNacFrom125Poly = "axaxFl|jbMiAs@sBnGeC_BUBeBeAyDGqCEwL_Am@[_FcDa@k@iAqCu@q@sDeC"
+
+    //////////////////////////// Shuttle Bus Data /////////////////////////////////////////
+
+    // Checks for updates of shuttle1data passed from landing map firebase query
+    useEffect (() => {
+      console.log("shut 1 mapping", shuttle1prop)
+
+        if (shuttle1prop && shuttle1prop.polyline && shuttle1prop.duration_delta && shuttle1prop.datetime) {
+          const decodedPoly1 = decodeAndFormatPolyline(shuttle1prop.polyline)
+
+          setShuttle1Route(decodedPoly1)
+          setShuttle1Duration(convertToSeconds(shuttle1prop.duration_delta))
+          setShuttle1Offset(startHere(shuttle1prop.datetime, shuttle1prop.duration_delta))
+        }
+
+    }, [shuttle1prop])
+
+    // Checks for updates of shuttle2data passed from landing map firebase query
+    useEffect (() => {
+
+      console.log("shut 2 mapping", shuttle2prop)
+
+        if (shuttle2prop && shuttle2prop.polyline && shuttle2prop.duration_delta && shuttle2prop.datetime) {
+          const decodedPoly2 = decodeAndFormatPolyline(shuttle2prop.polyline)
+          setShuttle2Route(decodedPoly2)
+          setShuttle2Duration(convertToSeconds(shuttle2prop.duration_delta))
+          setShuttle2Offset(startHere(shuttle2prop.datetime, shuttle2prop.duration_delta))
+        }
+
+    }, [shuttle2prop])  
 
     /////////////////////////////// Animation Handeling ///////////////////////////////////////
 
+    // Calculates the number and location of marker lat/long between source and destination of bus for every second of duration
     const interpolatePoints = (points, numSteps) => {
         const totalSegments = points.length - 1;
         const stepsPerSegment = Math.ceil(numSteps / totalSegments);
@@ -92,8 +87,11 @@ const Newest = () => {
         return interpolatedPoints;
     };
     
+    // Triggers the shuttle "animations" which is just an update of the marker for every second left till arrival time is reached
     const animateShuttle = (route, setShuttlePosition, duration, startAt) => {
-        const interpolatedRoute = interpolatePoints(route, duration);
+      
+        
+      const interpolatedRoute = interpolatePoints(route, duration);
         let step = startAt < interpolatedRoute.length ? startAt : 0;
     
         const intervalId = setInterval(() => {
@@ -103,6 +101,7 @@ const Newest = () => {
         }, 1000);
     };
 
+    // Updates routing animation 
     useEffect(() => {
         if (shuttle1route.length && shuttle1duration) {
             animateShuttle(shuttle1route, setShuttle1Position, shuttle1duration, shutte1offset);
@@ -131,6 +130,7 @@ const Newest = () => {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
+    // Function to adjust time for map synchronizing across user devies due to client side computing (handles ios browser formatting)
     function startHere(initial_timestamp, delta_duration) {
         const currentTime = new Date();
         
@@ -145,28 +145,31 @@ const Newest = () => {
     
         const elapsedTime = Math.floor((currentTime - initialTime) / 1000);
         
-        console.log("int time:", initialTime)
-        console.log("elapsed time:", elapsedTime)
+        //console.log("int time:", initialTime)
+        //console.log("elapsed time:", elapsedTime)
         if (elapsedTime > delta_duration) {return delta_duration - 1}
         if (elapsedTime < 0) {return 0}
         return elapsedTime
     }
     
-
+    // Changes strings with s to an int in seconds
     function convertToSeconds(timeStr) { 
         let seconds = parseInt(timeStr)
         return seconds
       }
 
+    // Convert encoded polyline for leaflet mapping
     function decodeAndFormatPolyline(encodedPolyline) {
         const decodedPath = polyline.decode(encodedPolyline);
         return decodedPath.map(point => ({ lat: point[0], lng: point[1] }));
       }
 
+    // Leaflet mapping restrictions
     const center = [40.81792206720871, -73.94995404366331];
     const zoom = 15;
     const shuttlePath = decodeAndFormatPolyline('iqcxFbjjbMfEtC`@`@rA~CV\\lFlD`@PtL~@~CBpDJ~AbAJNlEpCZ_@pBgBr@sBYIg@[iAs@qBjGgC{AUBeBeAyDGqCEwL_Am@[_FcDa@k@iAqCu@q@sDeCaIgFiLwH}ByAqCmBvBwGz@`@lNdFcDbKjJjGpCfB');
 
+    // Create MTA marker
     const createMtaMarker = (imageUrl, lat, lng) => {
         const icon = L.icon({
           iconUrl: imageUrl,
@@ -177,6 +180,8 @@ const Newest = () => {
         return <Marker position={[lat, lng]} icon={icon} />;
       };
 
+
+    // Create NAC marker
     const createNacMarker = (imageUrl, lat, lng) => {
         const icon = L.icon({
           iconUrl: imageUrl,
@@ -187,6 +192,7 @@ const Newest = () => {
         return <Marker position={[lat, lng]} icon={icon} />;
       };
 
+    // Marker Data 
     const nacMarker = createNacMarker(castle, 40.82001421347782, -73.94900569957996)
     const w145Marker = createMtaMarker(mta, 40.810790169812186, -73.95259361484852)
     const w125Marker = createMtaMarker(mta, 40.823866173326145, -73.94489315828145)
@@ -212,4 +218,4 @@ const Newest = () => {
   )
 }
 
-export default Newest
+export default MapPublic

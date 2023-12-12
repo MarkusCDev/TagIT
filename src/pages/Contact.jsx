@@ -47,7 +47,7 @@ const Contact = () => {
               visit the website
               <svg
                 class="w-4 h-4 ms-2 rtl:rotate-180"
-                aria-hidden="true"Z
+                aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 14 10"

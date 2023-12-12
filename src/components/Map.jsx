@@ -287,17 +287,6 @@ const MapComponent = () => {
   //polyline for entire route
   const formattedPathRoute = decodeAndFormatPolyline("iqcxFbjjbMfEtC`@`@rA~CV\\lFlD`@PtL~@~CBpDJ~AbAJNlEpCZ_@pBgBr@sBYIg@[iAs@qBjGgC{AUBeBeAyDGqCEwL_Am@[_FcDa@k@iAqCu@q@sDeCaIgFiLwH}ByAqCmBvBwGz@`@lNdFcDbKjJjGpCfB")
 
-  const customSymbol = {
-    path: "M12 0C5 0 3 2 3 8v33l1 3v3c0 2 1 3 3 3h4c2 0 3-1 3-3v-1h22v1c0 2 1 3 3 3h4c2 0 3-1 3-3v-3l1-3V9c0-4-1-9-7-9Zm3 4h21l1 1v2l-1 1H15l-1-1V5l1-1Zm-4 7h28c2 0 3 1 3 3v12c0 2-2 3-3 3H11c-2 0-3-1-3-3V14c0-2 1-3 3-3Zm-9 1-2 2v8l2 2Zm46 0v12l2-2v-8l-2-2ZM12 34a3 3 0 1 1 0 7 3 3 0 0 1 0-7Zm27 0a3 3 0 1 1 0 7 3 3 0 0 1 0-7Z",
-    fillColor: "#F1B30E", // Fill color added, example red
-    fillOpacity: 1,      // You might need to add fillOpacity (1 for fully opaque)
-    strokeColor: "#000000",
-    strokeWeight: 1.7,
-    scale: 0.6,
-    scaledSize: { width: 20, height: 20 }, // Adjusted size to make it smaller
-    anchor: { x: 10, y: 10 }, // Adjust anchor accordingly
-};
-
   return (
     isLoaded && (
       <GoogleMap

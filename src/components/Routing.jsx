@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react"
-import { collection, query, orderBy, limit, onSnapshot, where, and } from "firebase/firestore"
-import { db } from "../firebase"
 
-const Routing = () => {
+const Routing = ({shuttle1prop, shuttle2prop}) => {
   const [to145th, setTo145th] = useState("--")
   const [to145thtonac, setTo145thToNac] = useState("--")
   const [to125th, setTo125th] = useState("--")
@@ -13,7 +11,7 @@ const Routing = () => {
     const currentTime = new Date();
     const differenceInMilliseconds = arrivalTime - currentTime;
     const differenceInSeconds = Math.ceil((differenceInMilliseconds / 1000) / 60)
-    console.log("difference", differenceInSeconds)
+    //console.log("difference", differenceInSeconds)
     if (differenceInSeconds < 0) {
       return "--"
     }
@@ -33,85 +31,43 @@ const Routing = () => {
     return () => clearInterval(timer)
   }, [])
 
-  //NAC to 125
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const q1 = query(collection(db, "CCNY_Shuttle_Routing"), orderBy("datetime", "desc"), limit(1), where("nextStop", "==", "W125"))
-        const unsubscribe1 = onSnapshot(q1, (querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-            //console.log("1 datetime: ", doc.data().datetime, " previous stop: ", doc.data().prevStop, " nest stop: ", doc.data().nextStop, " prev to next stop time: ", doc.data().duration)
-            //console.log(secondsToCeilingMinutes(doc.data().duration))
-            //setTo125th(secondsToCeilingMinutes(doc.data().duration))
-            setTo125th(getTimeDifferenceInSeconds(doc.data().arrivaltime))
-          })
-        })
-      } catch (e) {
-        console.log(e)
-      }
-    };
-    fetchData()
-  }, [])
-
-  // NAC to 145
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const q1 = query(collection(db, "CCNY_Shuttle_Routing"), orderBy("datetime", "desc"), limit(1), where("nextStop", "==", "W145"))
-        const unsubscribe1 = onSnapshot(q1, (querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-            //console.log("2 datetime: ", doc.data().datetime, " previous stop: ", doc.data().prevStop, " nest stop: ", doc.data().nextStop, " prev to next stop time: ", doc.data().duration)
-            // console.log(secondsToCeilingMinutes(doc.data().duration));
-            setTo145th(getTimeDifferenceInSeconds(doc.data().arrivaltime))
-            
-          })
-        })
-      } catch (e) {
-        console.log(e)
-      }
+    if (shuttle1prop) { 
+      const data = shuttle1prop
+      console.log("data 2:", data)
+      if (data.nextStop === "NAC" && data.prevStop === "W125") {
+        setTo125thToNac(getTimeDifferenceInSeconds(data.arrivaltime))
+      } 
+      if (data.nextStop === "NAC" && data.prevStop === "W145") {
+        setTo145thToNac(getTimeDifferenceInSeconds(data.arrivaltime))
+      } 
+      if (data.nextStop === "W145") {
+        setTo145th(getTimeDifferenceInSeconds(data.arrivaltime))
+      } 
+      if (data.nextStop === "W125") {
+        setTo125th(getTimeDifferenceInSeconds(data.arrivaltime))
+      } 
     }
+  }, [shuttle1prop]);
 
-    fetchData()
-  }, [])
-
-
-  // 145 to NAC
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const q1 = query(collection(db, "CCNY_Shuttle_Routing"), orderBy("datetime", "desc"), limit(1), and(where("prevStop", "==", "W145"), where("nextStop", "==", "NAC")))
-        const unsubscribe1 = onSnapshot(q1, (querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-            //setTo145thToNac(secondsToCeilingMinutes(doc.data().duration))
-            setTo145thToNac(getTimeDifferenceInSeconds(doc.data().arrivaltime))
-          })
-        })
-      } catch (e) {
-        console.log(e)
-      }
-    };
-    
-    fetchData()
-  }, [])
-
-  // 125 to NAC
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const q1 = query(collection(db, "CCNY_Shuttle_Routing"), orderBy("datetime", "desc"), limit(1), and(where("prevStop", "==", "W125"), where("nextStop", "==", "NAC")))
-        const unsubscribe1 = onSnapshot(q1, (querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-            //setTo125thToNac(secondsToCeilingMinutes(doc.data().duration))
-            setTo125thToNac(getTimeDifferenceInSeconds(doc.data().arrivaltime))
-          })
-        })
-      } catch (e) {
-        console.log(e)
-      }
+    if (shuttle2prop) { 
+      const data = shuttle2prop
+      console.log("data 2:", data)
+      if (data.nextStop === "NAC" && data.prevStop === "W125") {
+        setTo125thToNac(getTimeDifferenceInSeconds(data.arrivaltime))
+      } 
+      if (data.nextStop === "NAC" && data.prevStop === "W145") {
+        setTo145thToNac(getTimeDifferenceInSeconds(data.arrivaltime))
+      } 
+      if (data.nextStop === "W145") {
+        setTo145th(getTimeDifferenceInSeconds(data.arrivaltime))
+      } 
+      if (data.nextStop === "W125") {
+        setTo125th(getTimeDifferenceInSeconds(data.arrivaltime))
+      } 
     }
-
-    fetchData()
-  }, [])
+  }, [shuttle2prop]);
 
 
   const stops = [
