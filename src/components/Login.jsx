@@ -20,16 +20,16 @@ const Login = () => {
     if (email.includes("@citymail.cuny.edu")) {
       try {
         await logIn(email, password)
-        navigate("/map");
+        navigate("/map")
       } catch (err) {
-        setError(err.message);
-        console.log(err);
+        setError(err.message)
+        console.log(err)
       }
     } else {
       setError("Use A @Citymail.cuny.edu")
       console.log("Email must include @citymail.cuny.edu")
     }
-  };
+  }
 
   return (
     <div className="page-container">
@@ -39,7 +39,7 @@ const Login = () => {
         {/* Login Form */}
         <form onSubmit={handleSubmit}>
           {/* Error Message */}
-          <div className="mb-3">{error}</div>
+          <div className="text-center text-red-500 mb-3">{error}</div>
 
           {/* Email Input */}
           <div>

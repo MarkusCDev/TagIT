@@ -6,6 +6,7 @@ const Routing = ({shuttle1prop, shuttle2prop}) => {
   const [to125th, setTo125th] = useState("--")
   const [to125thtonac, setTo125thToNac] = useState("--")
   
+  // Function to find difference of arrival time (estiamted to nextStop) and current time for routing purposes
   function getTimeDifferenceInSeconds(arrivalTimeString) {
     const arrivalTime = new Date(arrivalTimeString);
     const currentTime = new Date();
@@ -19,6 +20,7 @@ const Routing = ({shuttle1prop, shuttle2prop}) => {
     return differenceInSeconds;
   }
 
+  // Countdown route time every minute
   useEffect(() => {
     const timer = setInterval(() => {
       setTo145th((prevTime) => (prevTime > 0 ? prevTime - 1 : "--"))
@@ -31,6 +33,8 @@ const Routing = ({shuttle1prop, shuttle2prop}) => {
     return () => clearInterval(timer)
   }, [])
 
+
+  // Checks for shuttle 1 routing updates
   useEffect(() => {
     if (shuttle1prop) { 
       const data = shuttle1prop
@@ -50,6 +54,8 @@ const Routing = ({shuttle1prop, shuttle2prop}) => {
     }
   }, [shuttle1prop]);
 
+
+  // Checks for shuttle 2 routing updates
   useEffect(() => {
     if (shuttle2prop) { 
       const data = shuttle2prop
@@ -70,6 +76,7 @@ const Routing = ({shuttle1prop, shuttle2prop}) => {
   }, [shuttle2prop]);
 
 
+  // Sets the times to show up on the map
   const stops = [
     { name: "To 145th", time: to145th },
     { name: "145th > CCNY", time: to145thtonac },
@@ -77,6 +84,7 @@ const Routing = ({shuttle1prop, shuttle2prop}) => {
     { name: "125th > CCNY", time: to125thtonac },
   ]
 
+  // Chnage color of time depending on how close to 0
   const getColorForTime = (minutes) => {
     if (minutes <= 10) {
       return "text-green-600"

@@ -13,12 +13,18 @@ const Signup = () => {
   const [passwordsMatch, setPasswordsMatch] = useState(true)
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [error, setError] = useState("")
   const { signUp } = useUserAuth()
   const navigate = useNavigate()
 
   {/* Handles signup user with firebase database, limited to 100 signups per hour*/}
   const handleSubmit = async (e) => {
     e.preventDefault()
+    const passwordValidation = validatePassword(password)
+    if (!passwordValidation.valid) {
+      setError(passwordValidation.message)
+      return
+    }
     if (email.includes("@citymail.cuny.edu") && password === confirmPwd) {
       try {
         await signUp(email, password)
@@ -32,6 +38,25 @@ const Signup = () => {
     }
   }
 
+  const validatePassword = (password) => {
+    const hasLowercase = /[a-z]/.test(password)
+    const hasUppercase = /[A-Z]/.test(password)
+    const hasNumber = /\d/.test(password)
+    const hasSpecial = /[@$!%*?&]/.test(password)
+    const isAtLeast8Chars = password.length >= 8
+  
+    let missingChars = [];
+    if (!hasLowercase) missingChars.push("lowercase letter")
+    if (!hasUppercase) missingChars.push("uppercase letter")
+    if (!hasNumber) missingChars.push("number")
+    if (!hasSpecial) missingChars.push("special character (@$!%*?&)");
+    if (!isAtLeast8Chars) missingChars.push("minimum length of 8 characters")
+  
+    return missingChars.length === 0 
+      ? { valid: true, message: "" } 
+      : { valid: false, message: "Missing: " + missingChars.join(", ") }
+  }
+
   return (
     <div className="page-container">
       <div className="page-container-inner">
@@ -41,6 +66,8 @@ const Signup = () => {
 
         {/* SignUp Form */}
         <form onSubmit={handleSubmit}>
+          {/* Error Message */}
+          <div className="text-center text-red-500 mb-3">{error}</div>
 
           {/* Username Input */}
           <div>
@@ -73,7 +100,7 @@ const Signup = () => {
               />
               <button
                 type="button"
-                className="flex items-center absolute top-0 right-0 mt-3 mr-4 p-0.25 rounded bg-indigo-100"
+                className="flex items-center absolute top-0 right-0 mt-3 mr-4 p-0.25 rounded"
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? (
@@ -118,7 +145,7 @@ const Signup = () => {
               />
               <button
                 type="button"
-                className="flex items-center absolute top-0 right-0 mt-3 mr-4 p-0.25 rounded bg-indigo-100"
+                className="flex items-center absolute top-0 right-0 mt-3 mr-4 p-0.25 rounded"
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
               >
                 {showConfirmPassword ? (
