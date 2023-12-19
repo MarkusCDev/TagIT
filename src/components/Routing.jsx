@@ -38,7 +38,7 @@ const Routing = ({shuttle1prop, shuttle2prop}) => {
   useEffect(() => {
     if (shuttle1prop) { 
       const data = shuttle1prop
-      console.log("data 2:", data)
+      console.log("data 1:", data)
       if (data.nextStop === "NAC" && data.prevStop === "W125") {
         setTo125thToNac(getTimeDifferenceInSeconds(data.arrivaltime))
       } 

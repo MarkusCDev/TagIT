@@ -2,9 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "../customStyles.css";
 
-{
-  /* Contact Us Page */
-}
+{/* Contact Us Page */}
 
 const Contact = () => {
   return (
@@ -38,15 +36,15 @@ const Contact = () => {
           </h2>
           <p className="text-indigo-700">Phone: (212) 650-8675</p>
           <p className="text-indigo-700">Email: facilities@ccny.cuny.edu</p>
-          <p class="text-indigo-700">
+          <p className="text-indigo-700">
             To learn more about Facility Department,{" "}
             <a
               href="https://www.ccny.cuny.edu/facilities"
-              class="inline-flex items-center font-medium text-indigo-700 hover:underline"
+              className="inline-flex items-center font-medium text-indigo-700 hover:underline"
             >
               visit the website
               <svg
-                class="w-4 h-4 ms-2 rtl:rotate-180"
+                className="w-4 h-4 ms-2 rtl:rotate-180"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -54,9 +52,9 @@ const Contact = () => {
               >
                 <path
                   stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="1"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="1"
                   d="M1 5h12m0 0L9 1m4 4L9 9"
                 />
               </svg>

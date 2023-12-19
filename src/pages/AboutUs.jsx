@@ -11,7 +11,7 @@ const AboutUs = () => {
 
   return (
     <div className="about-us-container">
-      <div className="about-us-container-inner">
+      <div className="about-us-container-inner mb-3">
 
         {/* Logo Section */}
         <div className="mb-8">

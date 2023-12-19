@@ -14,11 +14,11 @@ const Navbar = () => {
   const handleLogOut = async () => {
     try {
       await logOut();
-      console.log("you are logged out")
+      console.log("You have Logged Off.")
       setIsMenuOpen(false)
       navigate("about")
     } catch (e) {
-      console.log("suss not working")
+      console.log("Unable to Log Out.")
     }
   };
 

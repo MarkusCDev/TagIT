@@ -77,7 +77,7 @@ const LandingMap = () => {
 
   return (
     <div className="landing-map-container">
-      <div className="landing-map-container-inner">
+      <div className="landing-map-container-inner mb-3">
         <div className="w-full mb-4">
           <Routing shuttle1prop={shuttle1data} shuttle2prop={shuttle2data}/>
         </div>
