@@ -17,7 +17,7 @@ const Login = () => {
   {/* Handles Firebase login */} 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    if (email.includes("@citymail.cuny.edu")) {
+    if (email.includes("@citymail.cuny.edu") || email.includes("@ccny.cuny.edu")) {
       try {
         await logIn(email, password)
         navigate("/map")

@@ -29,7 +29,8 @@ export function UserAuthContextProvider({ children }) {
   {/* Send Verification email when User signs up */}
   function signUp(email, password) {
     return createUserWithEmailAndPassword(auth, email, password).then((cred) => {
-      return sendEmailVerification(cred.user)
+      sendEmailVerification(cred.user)
+      return logOut()
     })
   }
 

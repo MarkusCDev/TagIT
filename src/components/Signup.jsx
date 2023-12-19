@@ -25,7 +25,7 @@ const Signup = () => {
       setError(passwordValidation.message)
       return
     }
-    if (email.includes("@citymail.cuny.edu") && password === confirmPwd) {
+    if ((email.includes("@citymail.cuny.edu") || email.includes("@ccny.cuny.edu")) && password === confirmPwd) {
       try {
         await signUp(email, password)
         navigate("/login")
