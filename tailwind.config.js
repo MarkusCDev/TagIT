@@ -3,8 +3,8 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     fontFamily: {
-      poppins: ["Poppins", "sans"],
-      redHatText: ["Red Hat Text", "sans"],
+      urbanist: ["Urbanist", "sans"],
+      redHatDisplay: ["Red Hat Display", "sans"],
     },
     extend: {
       colors: {
