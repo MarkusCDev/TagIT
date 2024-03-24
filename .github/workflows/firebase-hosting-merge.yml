@@ -18,44 +18,71 @@
 #           channelId: live
 #           projectId: ccny-shuttle-a35ec
 
-name: Firebase Deployment
+# name: Firebase Deployment
+# on:
+#   push:
+#     branches:
+#       - main
+# jobs:
+#   build:
+#     name: Build
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout Repo
+#         uses: actions/checkout@v2.3.2
+#       - name: Install Dependencies
+#         run: npm install      
+#       - name: Build
+#         env:
+#           CI: false        
+#         run: npm run build
+#       - name: Archive Production Artifact
+#         uses: actions/upload-artifact@v2
+#         with:
+#           name: build
+#           path: build
+#   deploy:
+#     name: Deploy
+#     needs: build
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout Repo
+#         uses: actions/checkout@v2.3.2
+#       - name: Download Artifact
+#         uses: actions/download-artifact@v2
+#         with:
+#           name: build
+#           path: build
+#       - name: Deploy to Firebase
+#         uses: w9jds/firebase-action@master
+#         with:
+#           args: deploy -P ccny-shuttle-a35ec
+#         env:
+#           FIREBASE_TOKEN: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CCNY_SHUTTLE_A35EC }}
+
+name: Deploy to Firebase Hosting on push
+
 on:
   push:
     branches:
       - main
+
 jobs:
-  build:
-    name: Build
+  build_and_deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v2.3.2
-      - name: Install Dependencies
-        run: npm install      
-      - name: Build
-        env:
-          CI: false        
-        run: npm run build
-      - name: Archive Production Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: build
-          path: build
-  deploy:
-    name: Deploy
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v2.3.2
-      - name: Download Artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: build
-          path: build
-      - name: Deploy to Firebase
-        uses: w9jds/firebase-action@master
-        with:
-          args: deploy --only hosting
-        env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CCNY_SHUTTLE_A35EC }}
+    - uses: actions/checkout@v2
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
+    - name: Install Dependencies
+      run: npm install
+
+    - name: Build and Deploy
+      env:
+        FIREBASE_TOKEN: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CCNY_SHUTTLE_A35EC }}
+      run: |
+        npm install -g firebase-tools
+        npm run build:deploy
