@@ -1,8 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,300..900;1,300..900&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /* Index.css enables tailwind css library ^ above imports */
+@layer base {
+  :root {
+    /* Primary is used for the background color (lighter color) */
+    --primary-color: 253 247 255;
+    /* Secondary is used icons and typography primarily */
+    --secondary-color: 75 68 83;
+    /* action is primarily for "call to action"/"look at me" uses, such as buttons */
+    --action-color: 125 85 199;
+  }
+}
 
 body {
   background-color: #C3B3FC;
