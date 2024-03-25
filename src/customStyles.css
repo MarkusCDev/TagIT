@@ -5,7 +5,7 @@
 /* Common Styles for page layouts */
 
 .page-container {
-    @apply flex min-h-screen bg-gradient-to-b from-violet-300 to-violet-500 items-center justify-center px-4 mt-2 sm:px-6 lg:px-8;
+    @apply flex bg-gradient-to-b from-violet-300 to-violet-500 items-center justify-center px-4 mt-2 sm:px-6 lg:px-8;
 }
 
 .page-container-inner {
@@ -13,7 +13,7 @@
 }
 
 .landing-map-container {
-    @apply flex flex-col min-h-screen bg-gradient-to-b from-violet-300 to-violet-500 justify-center items-center px-4 sm:px-6 lg:px-8;
+    @apply flex flex-col bg-gradient-to-b from-violet-300 to-violet-500 justify-center items-center px-4 sm:px-6 lg:px-8;
 }
 
 .landing-map-container-inner {
@@ -25,7 +25,7 @@
 }
 
 .about-us-container {
-    @apply flex flex-col min-h-screen bg-gradient-to-b from-violet-300 to-violet-500 justify-center items-center px-4 sm:px-6 lg:px-8 mt-2 sm:mt-0;
+    @apply flex flex-col bg-gradient-to-b from-violet-300 to-violet-500 justify-center items-center px-4 sm:px-6 lg:px-8 mt-2 sm:mt-0;
 }
 
 .about-us-container-inner {
