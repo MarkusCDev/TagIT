@@ -39,6 +39,6 @@ jobs:
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@v13.5.2
         with:
-          run: deploy -P ccny-shuttle-a35ec
+          args: deploy -P ccny-shuttle-a35ec
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
