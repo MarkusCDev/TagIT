@@ -6,7 +6,6 @@ import { UserAuthContextProvider } from "./components/UserAuth"
 import ProtectedRoute from "./components/ProtectedRoute"
 import Login from "./components/Login"
 import Signup from "./components/Signup"
-import CopyrightNotice from "./components/CopyrightNotice"
 import ResetPassword from "./components/ResetPassword"
 
 {/* Pages */}
@@ -33,7 +32,7 @@ function App() {
         <Route path="*" element={<MainLayout><NotFound /></MainLayout>} />
 
         {/* User Logged In = True : Routing, Component must be wrapped by Protected Route to ensure User Auth check */}
-        <Route path="/map" element={<ProtectedRoute><MainLayout><LandingMap /></MainLayout></ProtectedRoute>}/>
+        <Route path="/map" element={<MainLayout><ProtectedRoute><LandingMap /></ProtectedRoute></MainLayout>}/>
       </Routes>
     </UserAuthContextProvider>
   )
