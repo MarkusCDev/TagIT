@@ -20,7 +20,7 @@ jobs:
           CI: false        
         run: npm run build
       - name: Archive Production Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@master
         with:
           name: dist
           path: dist
@@ -30,9 +30,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v2.3.2
+        uses: actions/checkout@master
       - name: Download Artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@master
         with:
           name: dist
           path: dist
