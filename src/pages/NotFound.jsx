@@ -6,7 +6,7 @@ import '../customStyles.css'
 
 const NotFound = () => {
   return (
-    <div className="page-container min-h-[calc(100vh-144px)] h-full">
+    <div className="page-container h-full">
       <div className="page-container-inner">
         <div className="mb-8">
           <h1 className="text-center text-4xl text-indigo-700 font-bold">404 Not Found</h1>

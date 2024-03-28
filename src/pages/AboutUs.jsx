@@ -10,8 +10,8 @@ const AboutUs = () => {
   const { user } = useUserAuth();
 
   return (
-    <div className="about-us-container min-h-[calc(100vh-144px)] h-full">
-      <div className="about-us-container-inner mb-3">
+    <div className="flex flex-col w-full h-full items-center justify-center overflow-hidden bg-primary">
+      <div className="w-11/12 mx-auto text-center max-w-screen-xl h-5/6">
 
         {/* Logo Section */}
         <div className="mb-8">
@@ -26,11 +26,7 @@ const AboutUs = () => {
         <div className="mb-6 text-left">
           <h2 className="text-lg sm:text-xl text-indigo-700 font-bold mb-4">About the Project</h2>
           <p className="text-indigo-700">
-            The Tag!T CCNY Shuttle Bus Tracker is a tracking project designed to make
-            campus transportation easier and more accessible for CCNY students.
-            Our platform provides information on shuttle bus
-            locations, routes, and estimated arrival times, helping you to plan
-            your journey effectively and arrive on time, every time.
+            The Tag!T CCNY Shuttle Bus Tracker offers real-time updates on shuttle locations, routes, and arrival times, making campus transport easier for students. Plan your journey and always arrive on time.
           </p>
         </div>
 

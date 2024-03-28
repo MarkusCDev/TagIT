@@ -76,7 +76,7 @@ const LandingMap = () => {
   };
 
   return (
-    <div className="landing-map-container min-h-[calc(100vh-144px)] h-full">
+    <div className="landing-map-container h-full">
       <div className="landing-map-container-inner mb-3">
         <div className="w-full mb-4">
           <Routing shuttle1prop={shuttle1data} shuttle2prop={shuttle2data}/>
