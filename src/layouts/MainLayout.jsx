@@ -119,13 +119,13 @@ const MainLayout = ({ children }) => {
         handleLogOut={handleLogOut}
       />
       {/* TO DO: Remove the md screen restriction when `/map page is fixed so that we can stay consistent with a one page no-scroll layout` */}
-      <div className="md:max-h-[calc(100vh-80px)] overflow-hidden relative">
+      <div className={twJoin("overflow-hidden relative", isMenuOpen ? "max-h-[calc(100vh-80px)]" : "md:max-h-[calc(100vh-80px)]")}>
         {/* We are subtracting by 144px because this is the result of adding the nav height (80px) and footer height (64px) to keep everything in one page */}
-        <div className="md:max-h-[calc(100vh-144px)]">{children}</div>
+        <div className={twJoin(isMenuOpen ? "max-h-[calc(100vh-144px)]" : "md:max-h-[calc(100vh-144px)]")}>{children}</div>
         <CopyrightNotice />
         <div
           className={twJoin(
-            "absolute inset-0 bg-primary z-[9999] transition-transform",
+            "absolute inset-0 bg-primary z-[9999] transition-transform h-full",
             isMenuOpen ? "translate-x-0" : "-translate-x-full"
           )}
         >
