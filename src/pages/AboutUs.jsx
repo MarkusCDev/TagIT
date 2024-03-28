@@ -10,7 +10,7 @@ const AboutUs = () => {
   const { user } = useUserAuth();
 
   return (
-    <div className="about-us-container">
+    <div className="about-us-container min-h-[calc(100vh-144px)] h-full">
       <div className="about-us-container-inner mb-3">
 
         {/* Logo Section */}
@@ -47,7 +47,8 @@ const AboutUs = () => {
           </ul>
         </div>
 
-        {/* Call to Action Tracking Button*/}
+        {/* Call to Action Tracking Button */}
+        {/* TO DO: When user is not logged in, make the button state 'Login', when they are logged in, say tracking */}
         {user ? (
           <Link to="/map"> 
            {/* If User Logged In = True */}

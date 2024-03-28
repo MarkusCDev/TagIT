@@ -6,7 +6,7 @@ import "../customStyles.css";
 
 const Contact = () => {
   return (
-    <div className="page-container">
+    <div className="page-container min-h-[calc(100vh-144px)] h-full">
       <div className="page-container-inner">
         {/* Title */}
         <div className="mb-8">
@@ -62,7 +62,7 @@ const Contact = () => {
           </p>
         </div>
 
-        <div className="flex items-center justify-center justify-between">
+        <div className="flex items-center justify-between">
           <a
             href="https://docs.google.com/forms/d/e/1FAIpQLSeReao8WevqZm-ey8ZCqqdjI124Gt0Zzj4YQcfhXcoR1MGtGg/viewform"
             target="_blank"

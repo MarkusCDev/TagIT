@@ -58,7 +58,7 @@ const Signup = () => {
   }
 
   return (
-    <div className="page-container">
+    <div className="page-container min-h-[calc(100vh-144px)] h-full">
       <div className="page-container-inner">
 
         {/* Logo */}
