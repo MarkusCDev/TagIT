@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 const Logo = () => {
     const navigate = useNavigate();
     return (
-        <div className="h-16 cursor-pointer" onClick={() => navigate("/")}>
+        <div className="h-16 cursor-pointer max-w-28" onClick={() => navigate("/")}>
             <img src={LogoImage} className="object-contain h-full w-full" alt="Logo of TagIT w/ CCNY" />
         </div>
     )
