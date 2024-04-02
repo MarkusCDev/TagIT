@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React from "react"
 import { Route, Routes } from "react-router-dom"
 
 {/* Components */}
@@ -16,6 +16,7 @@ import NotFound from "./pages/NotFound"
 
 {/* Layout */}
 import MainLayout from "./layouts/MainLayout"
+import MapLayout from "./layouts/MapLayout"
 
 {/* Component Stack */}
 function App() {
@@ -32,7 +33,7 @@ function App() {
         <Route path="*" element={<MainLayout><NotFound /></MainLayout>} />
 
         {/* User Logged In = True : Routing, Component must be wrapped by Protected Route to ensure User Auth check */}
-        <Route path="/map" element={<MainLayout><ProtectedRoute><LandingMap /></ProtectedRoute></MainLayout>}/>
+        <Route path="/map" element={<MapLayout><ProtectedRoute><LandingMap /></ProtectedRoute></MapLayout>}/>
       </Routes>
     </UserAuthContextProvider>
   )

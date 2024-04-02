@@ -96,21 +96,23 @@ const Routing = ({shuttle1prop, shuttle2prop}) => {
   }
 
   return (
-    <div className="flex-col bg-white rounded-lg shadow-lg p-4">
-      <h1 className="flex justify-center text-2xl font-bold mb-5">Bus Stop Timings</h1>
-      <ul>
-        {stops.map((stop, index) => (
-          <li
-            key={index}
-            className="flex justify-between items-center border-b py-2 last:border-0"
-          >
-            <span className="text-lg">{stop.name}</span>
-            <span className={`font-semibold ${getColorForTime(stop.time)}`}>
-              {stop.time}
-            </span>
-          </li>
-        ))}
-      </ul>
+    <div className="flex flex-col rounded-t-xl lg:rounded-lg shadow-lg h-full w-full">
+      <div className="m-4 w-[calc(100% - 1rem)] h-[calc(100% - 1rem)] flex flex-col gap-4">
+        <h1 className="flex justify-center text-2xl font-bold font-redHatDisplay">Shuttle Information</h1>
+        <ul>
+          {stops.map((stop, index) => (
+            <li
+              key={index}
+              className="flex justify-between items-center border-b py-2 last:border-0"
+            >
+              <span className="text-lg">{stop.name}</span>
+              <span className={`font-semibold ${getColorForTime(stop.time)}`}>
+                {stop.time}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   )
 }
