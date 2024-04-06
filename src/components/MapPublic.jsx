@@ -208,7 +208,7 @@ const MapPublic = ( {shuttle1prop, shuttle2prop} ) => {
     const w125Marker = createMtaMarker(Logo125th, 40.823866173326145, -73.94489315828145)
 
   return (
-    <MapContainer center={mobile === true ? mobileCenter : center} zoom={zoom} style={{ height: '100vh', width: '100%' }} touchZoom={false} scrollWheelZoom={false} boxZoom={false} zoomControl={false} dragging={false} doubleClickZoom={false}>
+    <MapContainer center={mobile === true ? mobileCenter : center} zoom={zoom} className='absolute inset-0' touchZoom={false} scrollWheelZoom={false} boxZoom={false} zoomControl={false} dragging={false} doubleClickZoom={false}>
         <TileLayer url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png" />
         {nacMarker}
         {w125Marker}

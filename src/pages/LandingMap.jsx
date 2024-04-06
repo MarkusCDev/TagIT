@@ -127,7 +127,7 @@ const LandingMap = () => {
 
   return (
     <div className="h-full w-full" id="map_page_container">
-      <div>
+      <div className="h-full w-full">
         <div>
           {isAdmin && (
             <div className="flex justify-center my-4">
