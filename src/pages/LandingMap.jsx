@@ -157,7 +157,7 @@ const LandingMap = () => {
               shuttle2prop={shuttle2data}
             />
           )}
-          <div className="absolute bottom-0 w-full min-h-[280px] lg:w-72 xl:w-96 lg:h-fit lg:top-10 lg:right-10 z-[9999]">
+          <div className="absolute bottom-0 w-full min-h-[270px] lg:w-72 xl:w-96 lg:h-fit lg:top-10 lg:right-10 z-[9999]">
             <div className="absolute inset-0 border-[1px] border-secondary/20 shadow rounded-t-xl lg:rounded-md bg-primary">
               <Routing shuttle1prop={shuttle1data} shuttle2prop={shuttle2data} />
             </div>
