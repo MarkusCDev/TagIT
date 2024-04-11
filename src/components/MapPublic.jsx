@@ -21,11 +21,15 @@ const MapPublic = ( {shuttle1prop, shuttle2prop} ) => {
     const [shutte2offset, setShuttle2Offset] = useState(0)
 
     let mql = window.matchMedia("(max-width: 1024px)");
+    let mql2 = window.matchMedia("(max-height: 700px)")
     const [mobile, setMobile] = useState(mql.matches);
+    const [zoomIn, setZoomIn] = useState(mql2.matches);
 
     useEffect(() => {
       let mql = window.matchMedia("(max-width: 1024px)");
       setMobile(mql.matches);
+      let mql2 = window.matchMedia("(max-height: 700px)");
+      setZoomIn(mql2.matches);
     }, [])
 
     //////////////////////////// Hardcoded PolyLine //////////////////////////////////////
@@ -176,7 +180,7 @@ const MapPublic = ( {shuttle1prop, shuttle2prop} ) => {
     // Leaflet mapping restrictions
     const center = [40.81792206720871, -73.94995404366331];
     const mobileCenter = [40.81311458493628, -73.95070408860828];
-    const zoom = 15;
+    const zoom = zoomIn ? 14 : 15;
     const shuttlePath = decodeAndFormatPolyline('iqcxFbjjbMfEtC`@`@rA~CV\\lFlD`@PtL~@~CBpDJ~AbAJNlEpCZ_@pBgBr@sBYIg@[iAs@qBjGgC{AUBeBeAyDGqCEwL_Am@[_FcDa@k@iAqCu@q@sDeCaIgFiLwH}ByAqCmBvBwGz@`@lNdFcDbKjJjGpCfB');
 
     // Create MTA marker
