@@ -5,8 +5,10 @@ import L from 'leaflet';
 import polyline from '@mapbox/polyline';
 import shuttle1 from '../assets/shuttle1R.png'
 import shuttle2 from '../assets/shuttle2R.png'
-import mta from '../assets/mta.png'
-import castle from '../assets/castle.png'
+
+import CCNY from '../assets/CCNY-Logo-Only.png'
+import Logo125th from '../assets/125thStationMarker.png'
+import Logo145th from '../assets/145thStationMarker.png'
 
 const MapPublic = ( {shuttle1prop, shuttle2prop} ) => {
     const [shuttle1route, setShuttle1Route] = useState('')
@@ -18,6 +20,17 @@ const MapPublic = ( {shuttle1prop, shuttle2prop} ) => {
     const [shutte1offset, setShuttle1Offset] = useState(0)
     const [shutte2offset, setShuttle2Offset] = useState(0)
 
+    let mql = window.matchMedia("(max-width: 1024px)");
+    let mql2 = window.matchMedia("(max-height: 700px)")
+    const [mobile, setMobile] = useState(mql.matches);
+    const [zoomIn, setZoomIn] = useState(mql2.matches);
+
+    useEffect(() => {
+      let mql = window.matchMedia("(max-width: 1024px)");
+      setMobile(mql.matches);
+      let mql2 = window.matchMedia("(max-height: 700px)");
+      setZoomIn(mql2.matches);
+    }, [])
 
     //////////////////////////// Hardcoded PolyLine //////////////////////////////////////
 
@@ -120,8 +133,8 @@ const MapPublic = ( {shuttle1prop, shuttle2prop} ) => {
 
         const icon = L.icon({
             iconUrl: imageUrl,
-            iconSize: [25, 41],
-            iconAnchor: [12.5, 20.5]
+            iconSize: [41, 25],
+            iconAnchor: [20.5, 12.5]
         });
 
         return <Marker position={position} icon={icon} />;
@@ -166,15 +179,16 @@ const MapPublic = ( {shuttle1prop, shuttle2prop} ) => {
 
     // Leaflet mapping restrictions
     const center = [40.81792206720871, -73.94995404366331];
-    const zoom = 15;
+    const mobileCenter = [40.81311458493628, -73.95070408860828];
+    const zoom = zoomIn ? 14 : 15;
     const shuttlePath = decodeAndFormatPolyline('iqcxFbjjbMfEtC`@`@rA~CV\\lFlD`@PtL~@~CBpDJ~AbAJNlEpCZ_@pBgBr@sBYIg@[iAs@qBjGgC{AUBeBeAyDGqCEwL_Am@[_FcDa@k@iAqCu@q@sDeCaIgFiLwH}ByAqCmBvBwGz@`@lNdFcDbKjJjGpCfB');
 
     // Create MTA marker
     const createMtaMarker = (imageUrl, lat, lng) => {
         const icon = L.icon({
           iconUrl: imageUrl,
-          iconSize: [10, 17],
-          iconAnchor: [5, 8.5]
+          iconSize: [25, 27],
+          iconAnchor: [12.5, 13.5]
         });
       
         return <Marker position={[lat, lng]} icon={icon} />;
@@ -185,26 +199,26 @@ const MapPublic = ( {shuttle1prop, shuttle2prop} ) => {
     const createNacMarker = (imageUrl, lat, lng) => {
         const icon = L.icon({
           iconUrl: imageUrl,
-          iconSize: [25, 41],
-          iconAnchor: [13, 21]
+          iconSize: [40, 42],
+          iconAnchor: [10, 21]
         });
       
         return <Marker position={[lat, lng]} icon={icon} />;
       };
 
     // Marker Data 
-    const nacMarker = createNacMarker(castle, 40.82001421347782, -73.94900569957996)
-    const w145Marker = createMtaMarker(mta, 40.810790169812186, -73.95259361484852)
-    const w125Marker = createMtaMarker(mta, 40.823866173326145, -73.94489315828145)
+    const nacMarker = createNacMarker(CCNY, 40.82001421347782, -73.94900569957996)
+    const w145Marker = createMtaMarker(Logo145th, 40.810790169812186, -73.95259361484852)
+    const w125Marker = createMtaMarker(Logo125th, 40.823866173326145, -73.94489315828145)
 
   return (
-    <MapContainer center={center} zoom={zoom} style={{ height: '550px', width: '100%' }} touchZoom={false} scrollWheelZoom={false} boxZoom={false} zoomControl={false} dragging={false} doubleClickZoom={false}>
+    <MapContainer center={mobile === true ? mobileCenter : center} zoom={zoom} className='absolute inset-0' touchZoom={false} scrollWheelZoom={false} boxZoom={false} zoomControl={false} dragging={false} doubleClickZoom={false}>
         <TileLayer url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png" />
         {nacMarker}
         {w125Marker}
         {w145Marker}
         {/* Entire Shuttle Route */}
-        <Polyline pathOptions={{ color: '#8c7dc4' }} positions={shuttlePath} />
+        <Polyline pathOptions={{ color: '#9ca3af' }} positions={shuttlePath} />
 
         {/* Shuttle 1 Routing */}
         <Polyline pathOptions={{ color: 'blue' }} positions={shuttle1route} />

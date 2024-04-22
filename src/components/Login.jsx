@@ -32,7 +32,7 @@ const Login = () => {
   }
 
   return (
-    <div className="page-container min-h-[calc(100vh-144px)] h-full">
+    <div className="page-container h-full">
       <div className="page-container-inner">
         {/* Logo */}
         <img className="w-20 h-20 mx-auto mb-5" src={ccnyimg} alt="CCNY Logo" />

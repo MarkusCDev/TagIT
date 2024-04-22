@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react"
 
+import CCNY from '../assets/CCNY-Logo-Only.png'
+import Logo125th from '../assets/125thStationMarker.png'
+import Logo145th from '../assets/145thStationMarker.png'
+import { twJoin } from "tailwind-merge"
+
 const Routing = ({shuttle1prop, shuttle2prop}) => {
   const [to145th, setTo145th] = useState("--")
   const [to145thtonac, setTo145thToNac] = useState("--")
@@ -78,10 +83,25 @@ const Routing = ({shuttle1prop, shuttle2prop}) => {
 
   // Sets the times to show up on the map
   const stops = [
-    { name: "To 145th", time: to145th },
-    { name: "145th > CCNY", time: to145thtonac },
-    { name: "To 125th", time: to125th },
-    { name: "125th > CCNY", time: to125thtonac },
+    { name: <div className="flex gap-2 items-center">
+      <img src={Logo145th} width={30} height={30} />
+      <p className="text-lg font-redHatDisplay text-secondary font-medium">To 145th</p>
+    </div>, time: to145th },
+    { name: 
+    <div className="flex gap-2 items-center">
+      <img src={Logo145th} width={30} height={30} />
+      <p className="text-lg font-redHatDisplay text-secondary font-medium">145th to CCNY</p>
+      <img src={CCNY} width={30} height={30} />
+    </div>, time: to145thtonac },
+    { name: <div className="flex gap-2 items-center">
+    <img src={Logo125th} width={30} height={30} />
+    <p className="text-lg font-redHatDisplay text-secondary font-semibold">To 125th</p>
+  </div>, time: to125th },
+    { name: <div className="flex gap-2 items-center">
+    <img src={Logo125th} width={30} height={30} />
+    <p className="text-lg font-redHatDisplay text-secondary font-medium">125th to CCNY</p>
+    <img src={CCNY} width={30} height={30} />
+  </div>, time: to125thtonac },
   ]
 
   // Chnage color of time depending on how close to 0
@@ -96,21 +116,26 @@ const Routing = ({shuttle1prop, shuttle2prop}) => {
   }
 
   return (
-    <div className="flex-col bg-white rounded-lg shadow-lg p-4">
-      <h1 className="flex justify-center text-2xl font-bold mb-5">Bus Stop Timings</h1>
-      <ul>
-        {stops.map((stop, index) => (
-          <li
-            key={index}
-            className="flex justify-between items-center border-b py-2 last:border-0"
-          >
-            <span className="text-lg">{stop.name}</span>
-            <span className={`font-semibold ${getColorForTime(stop.time)}`}>
-              {stop.time}
-            </span>
-          </li>
-        ))}
-      </ul>
+    <div className="flex flex-col rounded-t-xl lg:rounded-lg shadow-lg h-full w-full">
+      <div className="m-4 w-[calc(100% - 1rem)] h-[calc(100% - 1rem)] flex flex-col gap-4">
+        <h1 className="flex justify-center text-2xl font-bold font-redHatDisplay">Shuttle Information</h1>
+        <ul>
+          {stops.map((stop, index) => {
+            const active = stop.time === "--" ? false : true;
+            return  (
+              <li
+                key={index}
+                className={twJoin("flex justify-between items-center border-b py-2 last:border-0", active === false ? "opacity-50" : "")}
+              >
+                <span className="text-lg">{stop.name}</span>
+                <span className={`font-semibold ${getColorForTime(stop.time)}`}>
+                  {active === false ? stop.time : stop.time + "minutes away"}
+                </span>
+              </li>
+            )
+          })}
+        </ul>
+      </div>
     </div>
   )
 }
