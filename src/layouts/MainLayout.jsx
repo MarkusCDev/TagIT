@@ -109,75 +109,65 @@ const MainLayout = ({ children }) => {
   }, [location]);
 
   return (
-    <div className="w-full h-full left-0 top-0 absolute overflow-hidden">
-      <div className="overflow-hidden absolute bottom-0 w-full top-0 z-0">
-        <MainNav
-          isMenuOpen={isMenuOpen}
-          setIsMenuOpen={setIsMenuOpen}
-          user={user}
-          logOut={logOut}
-          navigate={navigate}
-          handleLogOut={handleLogOut}
-        />
-        {/* Subtracting 5rem because that is height for Navbar */}
-        <div className={"overflow-hidden relative h-[calc(100%-5rem)]"}>
-          {/* Subtracting 4rem because that is height for copyright notice */}
-          <div className={"max-h-[calc(100%-4rem)] h-[calc(100%-4rem)] relative"}>
-            <div className="absolute inset-0">
-              {children}
-            </div>
-          </div>
-          <div className="h-16 absolute bottom-0 w-full">
-            <CopyrightNotice />
-          </div>
-          <div
-            className={twJoin(
-              "absolute inset-0 bg-primary z-[9999] transition-transform h-full",
-              isMenuOpen ? "translate-x-0" : "-translate-x-full"
-            )}
-          >
-            <ul className="mt-4 flex flex-col gap-2 items-start w-11/12 h-full mx-auto no-underline font-urbanist text-2xl text-secondary font-bold">
-              <li className="flex w-full justify-between items-center hover:translate-x-4 hover:text-action transition-transform">
-                <Link to={"/map"}>Tracking</Link>
-                <ChevronRight className="h-14 w-7" />
-              </li>
-              <li className="flex w-full justify-between items-center h-14 hover:translate-x-4 hover:text-action transition-transform">
-                <Link to={"/contact"}>Contact</Link>
-                <ChevronRight className="h-14 w-7" />
-              </li>
-              <li
-                className={twJoin(
-                  "flex w-full justify-between items-center h-14 hover:translate-x-4 hover:text-action transition-transform",
-                  !user ? "flex" : "hidden"
-                )}
+    <div className="md:h-screen md:overflow-hidden">
+      <MainNav
+        isMenuOpen={isMenuOpen}
+        setIsMenuOpen={setIsMenuOpen}
+        user={user}
+        logOut={logOut}
+        navigate={navigate}
+        handleLogOut={handleLogOut}
+      />
+      {/* TO DO: Remove the md screen restriction when `/map page is fixed so that we can stay consistent with a one page no-scroll layout` */}
+      <div className="md:max-h-[calc(100vh-80px)] overflow-hidden relative">
+        {/* We are subtracting by 144px because this is the result of adding the nav height (80px) and footer height (64px) to keep everything in one page */}
+        <div className="md:max-h-[calc(100vh-144px)]">{children}</div>
+        <CopyrightNotice />
+        <div
+          className={twJoin(
+            "absolute inset-0 bg-primary z-[9999] transition-transform",
+            isMenuOpen ? "translate-x-0" : "-translate-x-full"
+          )}
+        >
+          <ul className="mt-4 flex flex-col gap-2 items-start w-11/12 h-full mx-auto no-underline font-urbanist text-2xl text-secondary font-bold">
+            <li className="flex w-full justify-between items-center hover:translate-x-4 hover:text-action transition-transform">
+              <Link to={"/map"}>Tracking</Link>
+              <ChevronRight className="h-14 w-7" />
+            </li>
+            <li className="flex w-full justify-between items-center h-14 hover:translate-x-4 hover:text-action transition-transform">
+              <Link to={"/contact"}>Contact</Link>
+              <ChevronRight className="h-14 w-7" />
+            </li>
+            <li
+              className={twJoin(
+                "flex w-full justify-between items-center h-14 hover:translate-x-4 hover:text-action transition-transform",
+                !user ? "flex" : "hidden"
+              )}
+            >
+              <Link to={"/login"}>Log in</Link>
+            </li>
+            <li
+              className={twJoin(
+                "flex w-full items-center h-14 mt-auto mb-8",
+                !user ? "flex" : "hidden"
+              )}
+            >
+              <button
+                className="w-full h-full rounded-md bg-action/80 hover:bg-action transition-colors flex justify-center items-center text-primary"
+                onClick={() => navigate("/signup")}
               >
-                <Link to={"/login"}>Log in</Link>
-              </li>
-              <li
-                className={twJoin(
-                  "flex w-full items-center h-14 mt-auto mb-8",
-                  !user ? "flex" : "hidden"
-                )}
+                Try it for free
+              </button>
+            </li>
+            <li className={twJoin(!user ? "hidden" : "flex items-center h-14")}>
+              <button
+                className="bg-transparent text-secondary text-2xl font-urbanist hover:text-red-400 transition-colors h-fit"
+                onClick={() => handleLogOut()}
               >
-                <button
-                  className="w-full h-full rounded-md bg-action/80 hover:bg-action transition-colors flex justify-center items-center text-primary"
-                  onClick={() => navigate("/signup")}
-                >
-                  Try it for free
-                </button>
-              </li>
-              <li
-                className={twJoin(!user ? "hidden" : "flex items-center h-14")}
-              >
-                <button
-                  className="bg-transparent text-secondary text-2xl font-urbanist hover:text-red-400 transition-colors h-fit"
-                  onClick={() => handleLogOut()}
-                >
-                  Log out
-                </button>
-              </li>
-            </ul>
-          </div>
+                Log out
+              </button>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
