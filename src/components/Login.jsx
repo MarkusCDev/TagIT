@@ -34,40 +34,44 @@ const Login = () => {
   return (
     <div className="page-container h-full">
       <div className="page-container-inner">
-        {/* Logo */}
-        <img className="w-20 h-20 mx-auto mb-5" src={ccnyimg} alt="CCNY Logo" />
+        {/* Sign in message */}
+        <h2 className="text-3xl text-gray-600 text-center font-bold">Sign in to TagIT</h2>
+        {/* <h2 style={{textAlign: 'center', fontWeight: '700', color: 'grey', fontSize: '30px'}}>Sign in to TagIT</h2> */}
+        <h2 className="text-gray-500 text-center mt-2">
+          Use your <span className="font-bold">CCNY credentials</span> to sign in
+        </h2>
         {/* Login Form */}
         <form onSubmit={handleSubmit}>
           {/* Error Message */}
-          <div className="text-center text-red-500 mb-3">{error}</div>
+          <div className="text-center text-red-500 mb-5">{error}</div>
 
           {/* Email Input */}
           <div>
-            <label className="block mb-2 text-indigo-500" htmlFor="username">
+            {/* <label className="block mb-2 text-indigo-500" htmlFor="username">
               Username/Email
-            </label>
+            </label> */}
             <input
               type="email"
-              placeholder="City College Email"
+              placeholder="Enter your email or username"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full p-2 mb-6 text-indigo-700 border-b-2 border-indigo-500 outline-none focus:bg-gray-300"
+              className="w-full p-3 mb-6 text-indigo-700 border border-gray-600 rounded-md outline-none focus:bg-gray-300"
               name="username"
             />
           </div>
 
           {/* Password Input */}
           <div>
-            <label className="block mb-2 text-indigo-500" htmlFor="password">
+            {/* <label className="block mb-2 text-indigo-500" htmlFor="password">
               Password
-            </label>
+            </label> */}
             <div className="relative">
               <input
                 type={showPassword ? "text" : "password"}
-                placeholder="Password"
+                placeholder="Enter your password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full p-2 mb-6 text-indigo-700 border-b-2 border-indigo-500 outline-none focus:bg-gray-300"
+                className="w-full p-3 mb-6 text-indigo-700 border border-gray-600 rounded-md outline-none focus:bg-gray-300"
                 name="password"
               />
               <button
@@ -99,7 +103,7 @@ const Login = () => {
           </div>
 
           {/* Submit Button */}
-          <button className="w-full bg-indigo-700 hover:bg-purple-700 text-white font-bold py-2 px-4 mb-6 rounded transition-colors duration-300"type="submit">Login</button>
+          <button className="w-full bg-action hover:bg-purple-700 text-white font-bold py-2 px-4 mb-5 rounded transition-colors duration-300"type="submit">Sign In</button>
         </form>
 
         {/* Additional Links */}

@@ -5,11 +5,11 @@
 /* Common Styles for page layouts */
 
 .page-container {
-    @apply flex bg-gradient-to-b from-violet-300 to-violet-500 items-center justify-center px-4 mt-2 sm:px-6 lg:px-8;
+    @apply flex bg-primary items-center justify-center px-4 mt-2 sm:px-6 lg:px-8;
 }
 
 .page-container-inner {
-    @apply w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl m-auto bg-white rounded-lg p-5;
+    @apply w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl m-auto bg-primary rounded-lg p-5;
 }
 
 .landing-map-container {
