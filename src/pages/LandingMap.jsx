@@ -35,31 +35,48 @@ const LandingMap = () => {
       try {
         //Query for CCNY Shuttle 1
         const q1 = query(
-          collection(db, "CCNY_Shuttle_Routing"),
-          orderBy("datetime", "desc"),
-          limit(1),
-          where("name", "==", "CCNY Shuttle 1")
+          collection(db, "test_routes"),
+          orderBy("timestamp", "desc"),
+          limit(2),
+          where("name", "==", "shuttle1")
         );
+        
         const unsubscribe1 = onSnapshot(q1, (querySnapshot) => {
-          querySnapshot.forEach(async (doc) => {
-            console.log(
-              "LM CCNY Shuttle 1: datetime",
-              doc.data().datetime,
-              " arrivaltime",
-              doc.data().arrivaltime,
-              " duration",
-              doc.data().duration,
-              " polyline",
-              doc.data().ployline,
-              " delta_duration",
-              doc.data().duration_delta,
-              " prevStop",
-              doc.data().prevStop,
-              " nextStop",
-              doc.data().nextStop
-            );
-            await setShuttle1Data(doc.data());
+          const positions = [];
+
+          querySnapshot.forEach((doc) => {
+            const data = doc.data();
+            const timestamp = data.timestamp;
+            const posTimestamp = timestamp.toDate().getTime();
+        
+            positions.push({
+              timestamp: posTimestamp,
+              originalTimestamp: timestamp,
+              latitude: data.latitude,
+              longitude: data.longitude,
+            });
           });
+
+          const fiveMinutesBefore = positions[0].timestamp - (5 * 60 * 1000);
+
+          const recentPositions = positions.filter(pos => {
+            return pos.timestamp > fiveMinutesBefore;
+          });
+
+          if (recentPositions.length >= 2) {
+            // First position is most recent (due to orderBy desc)
+            const currentPosition = recentPositions[0];
+            const previousPosition = recentPositions[1];
+
+            setShuttle1Data([
+              currentPosition,
+              previousPosition
+            ]);
+          } else {
+            setShuttle1Data([
+              positions[0],
+            ]);
+          }
         });
 
         // Query for CCNY Shuttle 2
@@ -128,7 +145,7 @@ const LandingMap = () => {
   return (
     <div className="h-full w-full" id="map_page_container">
       <div className="h-full w-full">
-        <div>
+        {/* <div>
           {isAdmin && (
             <div className="flex justify-center my-4">
               <label className="relative inline-flex items-center cursor-pointer">
@@ -145,7 +162,7 @@ const LandingMap = () => {
               </label>
             </div>
           )}
-        </div>
+        </div> */}
         <div className="flex-grow w-full h-full overflow-hidden relative">
           {/* <MapComponent /> */}
           {/* <MapPublic /> */}
