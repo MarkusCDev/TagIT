@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { LoaderCircle, LogOut, Menu, MessageSquareText, X } from "lucide-react";
+import { LoaderCircle, LogOut, LayoutDashboard, MapPin, Menu, MessageSquareText, X } from "lucide-react";
 import { twJoin } from "tailwind-merge";
 import { useUserAuth } from "../components/UserAuth";
 import Logo from "../components/Logo";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const MapNav = ({ setOpenNav }) => {
   return (
@@ -20,6 +20,7 @@ const MapNav = ({ setOpenNav }) => {
 
 const ExtendedMapNav = ({ openNav, setOpenNav, navigate }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const location = useLocation();
   const { logOut } = useUserAuth();
 
   const handleLogOut = async () => {
@@ -33,6 +34,12 @@ const ExtendedMapNav = ({ openNav, setOpenNav, navigate }) => {
       console.log("Unable to Log Out.");
     }
   };
+
+  const handleAdminMapToggle = async () => {
+    location.pathname === '/map' ? 
+    (navigate('/admin'), setOpenNav(false)) : 
+    (navigate('/map'), setOpenNav(false));
+  }
   
   return (
     <div
@@ -51,11 +58,21 @@ const ExtendedMapNav = ({ openNav, setOpenNav, navigate }) => {
             />
           </div>
         </div>
-        <div className="flex gap-4 items-center text-action/80 hover:text-action cursor-pointer w-full" onClick={() => navigate("/contact")}>
+        <div className="flex gap-2 items-center text-action/80 hover:text-action cursor-pointer w-full" onClick={() => navigate("/contact")}>
           <MessageSquareText className="w-6 h-6" />
           <p className="text-base font-semibold">Contact</p>
         </div>
-        <div className="flex gap-4 items-center text-action/80 hover:text-action cursor-pointer w-full" onClick={() => handleLogOut()}>
+        {location.pathname === '/map' ?  
+          <div className="flex gap-2 items-center text-action/80 hover:text-action cursor-pointer w-full" onClick={() => handleAdminMapToggle()}>
+            <LayoutDashboard className="w-6 h-6" />
+            <p className="text-base font-semibold">Admin Dashboard</p>
+          </div> :
+          <div className="flex gap-2 items-center text-action/80 hover:text-action cursor-pointer w-full" onClick={() => handleAdminMapToggle()}>
+            <MapPin className="w-6 h-6" />
+            <p className="text-base font-semibold">Map</p>
+          </div>
+        }
+        <div className="flex gap-2 items-center text-action/80 hover:text-action cursor-pointer w-full" onClick={() => handleLogOut()}>
           <LogOut className="w-6 h-6" />
           <p className="text-base font-semibold">Sign out</p>
           <LoaderCircle className={twJoin("w-6 h-6 animate-spin", isLoading ? "flex" : "hidden")} />

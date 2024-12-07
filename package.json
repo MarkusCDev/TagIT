@@ -11,7 +11,10 @@
     "build:deploy": "env-cmd -f .env npm run build && firebase deploy -P ccny-shuttle-a35ec"
   },
   "dependencies": {
+    "@emotion/react": "^11.13.5",
+    "@emotion/styled": "^11.13.5",
     "@mapbox/polyline": "^1.2.1",
+    "@mui/icons-material": "^6.1.9",
     "@react-google-maps/api": "^2.19.2",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
