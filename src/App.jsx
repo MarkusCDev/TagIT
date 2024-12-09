@@ -11,6 +11,7 @@ import ResetPassword from "./components/ResetPassword"
 {/* Pages */}
 import About from "./pages/AboutUs"
 import LandingMap from "./pages/LandingMap"
+import Admin from "./pages/Admin"
 import Contact from "./pages/Contact"
 import NotFound from "./pages/NotFound"
 
@@ -34,6 +35,7 @@ function App() {
 
         {/* User Logged In = True : Routing, Component must be wrapped by Protected Route to ensure User Auth check */}
         <Route path="/map" element={<MapLayout><ProtectedRoute><LandingMap /></ProtectedRoute></MapLayout>}/>
+        <Route path="/admin" element={<MapLayout><ProtectedRoute><Admin/></ProtectedRoute></MapLayout>}/>
       </Routes>
     </UserAuthContextProvider>
   )
